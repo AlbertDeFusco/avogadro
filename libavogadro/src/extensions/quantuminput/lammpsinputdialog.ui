@@ -19,12 +19,18 @@
   <property name="windowTitle">
    <string>LAMMPS Input</string>
   </property>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>
    </property>
    <item>
     <layout class="QGridLayout" name="gridLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
      <item row="0" column="0">
       <widget class="QLabel" name="label_7">
        <property name="text">
@@ -35,95 +41,347 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
+     <item row="0" column="1" colspan="7">
       <widget class="QLineEdit" name="titleLine">
        <property name="text">
         <string>Title</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_9">
-       <item>
-        <widget class="QComboBox" name="unitsCombo">
-         <property name="toolTip">
-          <string>Select the unit style to be used during the simulation.</string>
-         </property>
-         <property name="currentIndex">
-          <number>1</number>
-         </property>
-         <item>
-          <property name="text">
-           <string>lj</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>real</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>metal</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>si</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>cgs</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>electron</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="3">
-      <layout class="QHBoxLayout" name="horizontalLayout_10">
-       <item>
-        <spacer name="horizontalSpacer_8">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>18</width>
-           <height>26</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="moreButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Hide Preview</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label">
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_atomstyle">
+       <property name="whatsThis">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://lammps.sandia.gov/doc/atom_style.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;http://lammps.sandia.gov/doc/atom_style.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
        <property name="text">
-        <string>Units</string>
+        <string>atom_style</string>
+       </property>
+       <property name="buddy">
+        <cstring>atomStyleCombo</cstring>
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
+     <item row="4" column="1">
+      <widget class="QComboBox" name="atomStyleCombo">
+       <property name="whatsThis">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://lammps.sandia.gov/doc/atom_style.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;http://lammps.sandia.gov/doc/atom_style.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="currentIndex">
+        <number>7</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>angle</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>atomic</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>bond</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>charge</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>dipole</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>electron</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ellipsoid</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>full</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>line</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>meso</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>molecular</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>peri</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>sphere</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>tri</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>wavepacket</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_units">
+       <property name="whatsThis">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://lammps.sandia.gov/doc/units.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;http://lammps.sandia.gov/doc/units.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>units</string>
+       </property>
+       <property name="buddy">
+        <cstring>unitsCombo</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="unitsCombo">
+       <property name="toolTip">
+        <string>Select the unit style to be used during the simulation.</string>
+       </property>
+       <property name="whatsThis">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://lammps.sandia.gov/doc/units.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;http://lammps.sandia.gov/doc/units.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>lj</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>real</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>metal</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>si</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>cgs</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>electron</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QLabel" name="label_dimension">
+       <property name="text">
+        <string>dimension</string>
+       </property>
+       <property name="buddy">
+        <cstring>dimensionCombo</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3">
+      <widget class="QComboBox" name="dimensionCombo">
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>2d</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>3d</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="4">
+      <widget class="QLabel" name="label_boundary">
+       <property name="text">
+        <string>boundary</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="8">
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0" colspan="8">
+      <widget class="Line" name="line_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="5">
+      <widget class="QComboBox" name="xBoundaryCombo">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>p</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>s</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>f</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>m</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>fs</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>fm</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="6">
+      <widget class="QComboBox" name="yBoundaryCombo">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>p</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>s</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>f</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>m</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>fs</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>fm</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="7">
+      <widget class="QComboBox" name="zBoundaryCombo">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>p</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>s</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>f</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>m</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>fs</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>fm</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_10">
+     <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -136,6 +394,19 @@
        </property>
       </spacer>
      </item>
+     <item>
+      <widget class="QPushButton" name="moreButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Hide Preview</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -143,8 +414,21 @@
      <property name="enabled">
       <bool>true</bool>
      </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="readOnly">
       <bool>false</bool>
+     </property>
+     <property name="html">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Monospace'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Courier New,courier'; font-size:10pt;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="acceptRichText">
       <bool>false</bool>

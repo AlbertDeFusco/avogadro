@@ -44,7 +44,24 @@ namespace Avogadro
     void writeSettings(QSettings&) const;
       
 
-    enum unitType{lj, real, metal, si, cgs, electron};
+    enum unitType{lj, real, metal, si, cgs, u_electron};
+    enum dimensionType{d2, d3};
+    enum boundaryType{p, s, f, m, fs, fm};
+    enum atomStyle{ angle,
+	    atomic,
+	    bond,
+	    charge,
+	    dipole,
+	    a_electron,
+	    ellipsoid,
+	    full,
+	    line,
+	    meso,
+	    molecular,
+	    peri,
+	    sphere,
+	    tri,
+	    wavepacket};
 
     //enum calculationType{SP, OPT, FREQ};
     //enum theoryType{RHF, MP2, B3LYP, CCSD, CCSDT};
@@ -72,6 +89,11 @@ namespace Avogadro
     //int m_num_elec;
 
     unitType m_unitType;
+    dimensionType m_dimensionType;
+    boundaryType m_xBoundaryType;
+    boundaryType m_yBoundaryType;
+    boundaryType m_zBoundaryType;
+    atomStyle m_atomStyle;
 
     QString m_output;
     coordType m_coordType;
@@ -81,6 +103,11 @@ namespace Avogadro
     // Generate an input deck as a string
     QString generateInputDeck();
     QString getUnitType(unitType t);
+    QString getAtomStyle(atomStyle t);
+    QString getDimensionType(dimensionType t);
+    QString getXBoundaryType(boundaryType t);
+    QString getYBoundaryType(boundaryType t);
+    QString getZBoundaryType(boundaryType t);
     // Translate enums to strings
     //QString getCalculationType(calculationType t);
     //QString getWavefunction(void);
@@ -111,6 +138,11 @@ namespace Avogadro
     //void setCoords(int);
 
     void setUnits(int);
+    void setAtomStyle(int);
+    void setDimensionType(int);
+    void setXBoundaryType(int);
+    void setYBoundaryType(int);
+    void setZBoundaryType(int);
   };
 }
 
