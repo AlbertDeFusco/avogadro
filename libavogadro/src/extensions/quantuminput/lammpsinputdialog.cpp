@@ -26,16 +26,20 @@
 
 #include <avogadro/molecule.h>
 #include <avogadro/atom.h>
+#include <avogadro/bond.h>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
 
 #include <QString>
 #include <QTextStream>
-//#include <QFileDialog>
 #include <QMessageBox>
 #include <QDebug>
+#include <QHash>
+
 
 using namespace OpenBabel;
+using namespace std;
 
 namespace Avogadro
 {
@@ -275,6 +279,23 @@ namespace Avogadro
       readData = false;
     updatePreviewText();
   }
+  void LammpsInputDialog::setMolecule(Molecule *molecule)
+  {
+    // Disconnect the old molecule first...
+    if (m_molecule) {
+      disconnect(m_molecule, 0, this, 0);
+    }
+
+    m_molecule = molecule;
+    // Update the preview text whenever primitives are changed
+    connect(m_molecule, SIGNAL(atomRemoved(Atom *)),
+            this, SLOT(updatePreviewText()));
+    connect(m_molecule, SIGNAL(atomAdded(Atom *)),
+            this, SLOT(updatePreviewText()));
+    connect(m_molecule, SIGNAL(atomUpdated(Atom *)),
+            this, SLOT(updatePreviewText()));
+    updatePreviewText();
+  }
 
 
   QString LammpsInputDialog::generateInputDeck()
@@ -461,11 +482,17 @@ namespace Avogadro
 	{
 	  QString     waterPotentialInput;
 	  QTextStream water(&waterPotentialInput);
+	  int Hydrogen;
+	  int Oxygen;
+	  determineAtomTypesSPC(Hydrogen, Oxygen);
 	  water 
 	    << "#The SPC water potential\n"
 	    << "pair_style	lj/cut/coul/cut 9.8 9.8\n"
-	    << "pair_coeff	1 1 0.15535 3.166\n"
-	    << "pair_coeff	* 2 0.00000 0.0000\n"
+	    << "pair_coeff	" 
+	        << Oxygen << " " << Oxygen 
+	        << " 0.15535 3.166\n"
+	    << "pair_coeff	"
+	        << "* " << Hydrogen << " 0.00000 0.0000\n"
 	    << "bond_style      harmonic\n"
 	    << "angle_style     harmonic\n"
 	    << "dihedral_style  none\n"
@@ -510,5 +537,28 @@ namespace Avogadro
     settings.setValue("lammps/savepath", m_savePath);
   }
 
+
+  void LammpsInputDialog::determineAtomTypesSPC(int &hyd, int &oxy)
+  {
+    double ThisMass;
+    QString ThisAtom;
+
+    QList<Atom *> atoms = m_molecule->atoms();
+    foreach (Atom *atom, atoms) {
+      ThisMass=atom->OBAtom().GetAtomicMass();
+      ThisAtom=etab.GetSymbol(atom->atomicNumber());
+      AtomMass[ThisAtom] = ThisMass;
+    }
+    int AtomIndex=0;
+    //Set AtomType integer
+    for(itr=AtomMass.begin();itr!=AtomMass.end();++itr) 
+    {
+      AtomIndex++;
+      AtomType[itr.key()] = AtomIndex;
+    }
+    hyd = AtomType.value("H");
+    oxy = AtomType.value("O");
+
+  }
 }
 

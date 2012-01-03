@@ -28,9 +28,11 @@
 #include "inputdialog.h"
 #include "ui_lammpsinputdialog.h"
 
+#include <QHash>
+
 namespace Avogadro
 {
-  //class Molecule;
+  class Molecule;
   class LammpsInputDialog : public InputDialog
   {
   Q_OBJECT
@@ -39,7 +41,6 @@ namespace Avogadro
     explicit LammpsInputDialog(QWidget *parent = 0, Qt::WindowFlags f = 0 );
     ~LammpsInputDialog();
 
-    //void setMolecule(Molecule *molecule);
     void readSettings(QSettings&);
     void writeSettings(QSettings&) const;
       
@@ -63,6 +64,7 @@ namespace Avogadro
 	    tri,
 	    wavepacket};
     enum waterPotential{ NONE, SPC, SPCE};
+    void setMolecule(Molecule *molecule);
 
     //enum calculationType{SP, OPT, FREQ};
     //enum theoryType{RHF, MP2, B3LYP, CCSD, CCSDT};
@@ -121,6 +123,12 @@ namespace Avogadro
 
     // Enable/disable form elements
     void deckDirty(bool);
+    void determineAtomTypesSPC(int &hyd, int &oxy);
+
+    //system typing
+    QHash<QString, int> AtomType;
+    QHash<QString, double> AtomMass;
+    QHash<QString, double>::iterator itr;
 
   public Q_SLOTS:
     void updatePreviewText();
