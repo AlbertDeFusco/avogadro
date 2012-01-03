@@ -49,7 +49,10 @@ namespace Avogadro
 	m_zBoundaryType(p),
 
 	m_atomStyle(full),
-    m_output(),  m_dirty(false), m_warned(false)
+
+        m_waterPotential(NONE),
+
+    m_output(),  m_dirty(false), m_warned(false), readData(false)
   {
     ui.setupUi(this);
     // Connect the GUI elements to the correct slots
@@ -69,6 +72,10 @@ namespace Avogadro
         this, SLOT(setYBoundaryType(int)));
     connect(ui.zBoundaryCombo, SIGNAL(currentIndexChanged(int)),
         this, SLOT(setZBoundaryType(int)));
+    connect(ui.waterPotentialCombo, SIGNAL(currentIndexChanged(int)),
+        this, SLOT(setWaterPotential(int)));
+    connect(ui.readDataLine, SIGNAL(editingFinished()),
+        this, SLOT(setReadData()));
 
     connect(ui.previewText, SIGNAL(cursorPositionChanged()),
         this, SLOT(previewEdited()));
@@ -153,6 +160,7 @@ namespace Avogadro
     ui.xBoundaryCombo->setCurrentIndex(0);
     ui.yBoundaryCombo->setCurrentIndex(0);
     ui.zBoundaryCombo->setCurrentIndex(0);
+    ui.waterPotentialCombo->setCurrentIndex(0);
 
     ui.previewText->setText(generateInputDeck());
     ui.previewText->document()->setModified(false);
@@ -242,6 +250,31 @@ namespace Avogadro
     ui.zBoundaryCombo->setEnabled(true);
     updatePreviewText();
   }
+  void LammpsInputDialog::setWaterPotential(int n)
+  {
+    m_waterPotential = (LammpsInputDialog::waterPotential) n;
+    ui.waterPotentialCombo->setEnabled(true);
+    if(n==1)
+    {
+      setAtomStyle(7);
+      ui.atomStyleCombo->setCurrentIndex(7);
+      ui.atomStyleCombo->setEnabled(false);
+    }
+    if(n==0)
+    {
+      ui.atomStyleCombo->setEnabled(true);
+    }
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setReadData()
+  {
+    m_readData = ui.readDataLine->text();
+    if(m_readData != "" )
+      readData = true;
+    else
+      readData = false;
+    updatePreviewText();
+  }
 
 
   QString LammpsInputDialog::generateInputDeck()
@@ -261,20 +294,15 @@ namespace Avogadro
       << getYBoundaryType(m_yBoundaryType) << " "
       << getZBoundaryType(m_zBoundaryType) << "\n";
     mol << "atom_style     " << getAtomStyle(m_atomStyle) << "\n";
-    mol << "pair_style     xxxxx\n";
-    mol << "bond_style     xxxxx\n";
-    mol << "angle_style    xxxxx\n";
-    mol << "\n";
+
+    mol << "\n" << getWaterPotential(m_waterPotential) << "\n";
 
     mol << "# Atom Definition\n";
-    mol << "read_data      xxxxx\n";
+    if(readData)
+      mol << "read_data      " << m_readData << "\n";
     mol << "\n";
 
     mol << "# Settings\n";
-    mol << "pair_coeff     xxxxx\n";
-    mol << "bond_coeff     xxxxx\n";
-    mol << "angle_coeff    xxxxx\n";
-    mol << "fix            xxxxx\n";
     mol << "velocity       xxxxx\n";
     mol << "\n";
 
@@ -416,6 +444,47 @@ namespace Avogadro
 	return "fm";
       default:
 	return "p";
+    }
+  }
+  QString LammpsInputDialog::getWaterPotential(waterPotential t)
+  {
+    switch(t)
+    {
+      case NONE:
+	{
+	  QString     waterPotentialInput;
+	  QTextStream water(&waterPotentialInput);
+	  water << "";
+	  return waterPotentialInput;
+	}
+      case SPC:
+	{
+	  QString     waterPotentialInput;
+	  QTextStream water(&waterPotentialInput);
+	  water 
+	    << "#The SPC water potential\n"
+	    << "pair_style	lj/cut/coul/cut 9.8 9.8\n"
+	    << "pair_coeff	1 1 0.15535 3.166\n"
+	    << "pair_coeff	* 2 0.00000 0.0000\n"
+	    << "bond_style      harmonic\n"
+	    << "angle_style     harmonic\n"
+	    << "dihedral_style  none\n"
+	    << "improper_style  none\n"
+	    << "bond_coeff      1 100.00   1.000\n"
+	    << "angle_coeff     1 100.00 109.47\n"
+	    << "special_bonds   lj/coul 0.0 0.0 0.5\n"
+	    << "fix             1 all shake 0.0001 20 0 b 1 a 1\n";
+	  return waterPotentialInput;
+	}
+      case SPCE:
+	return "SPC/E\n";
+      default:
+	{
+	  QString     waterPotentialInput;
+	  QTextStream water(&waterPotentialInput);
+	  water << "\n";
+	  return waterPotentialInput;
+	}
     }
   }
 

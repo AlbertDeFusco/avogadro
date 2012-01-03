@@ -62,6 +62,7 @@ namespace Avogadro
 	    sphere,
 	    tri,
 	    wavepacket};
+    enum waterPotential{ NONE, SPC, SPCE};
 
     //enum calculationType{SP, OPT, FREQ};
     //enum theoryType{RHF, MP2, B3LYP, CCSD, CCSDT};
@@ -79,7 +80,6 @@ namespace Avogadro
 //    Molecule* m_molecule;
 
     // Internal data structure for the simulation
-//    QString m_title;
     //bool m_2009;
     //calculationType m_calculationType;
     //theoryType m_theoryType;
@@ -88,17 +88,21 @@ namespace Avogadro
     //int m_charge;
     //int m_num_elec;
 
+    //QString m_title;
+    QString m_readData;
     unitType m_unitType;
     dimensionType m_dimensionType;
     boundaryType m_xBoundaryType;
     boundaryType m_yBoundaryType;
     boundaryType m_zBoundaryType;
     atomStyle m_atomStyle;
+    waterPotential m_waterPotential;
 
     QString m_output;
     coordType m_coordType;
     bool m_dirty;
     bool m_warned;
+    bool readData;
 
     // Generate an input deck as a string
     QString generateInputDeck();
@@ -108,6 +112,7 @@ namespace Avogadro
     QString getXBoundaryType(boundaryType t);
     QString getYBoundaryType(boundaryType t);
     QString getZBoundaryType(boundaryType t);
+    QString getWaterPotential(waterPotential t);
     // Translate enums to strings
     //QString getCalculationType(calculationType t);
     //QString getWavefunction(void);
@@ -129,6 +134,7 @@ namespace Avogadro
     void previewEdited();
 
     void setTitle();
+    void setReadData();
     //void setVersion(int);
     //void setCalculation(int);
     //void setTheory(int);
@@ -143,6 +149,9 @@ namespace Avogadro
     void setXBoundaryType(int);
     void setYBoundaryType(int);
     void setZBoundaryType(int);
+
+    void setWaterPotential(int);
+
   };
 }
 
