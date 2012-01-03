@@ -46,15 +46,19 @@ namespace Avogadro
   LammpsInputDialog::LammpsInputDialog(QWidget *parent, Qt::WindowFlags f)
     : InputDialog(parent, f), 
 
-	m_unitType(real),
-	m_dimensionType(d3),
-	m_xBoundaryType(p),
-	m_yBoundaryType(p),
-	m_zBoundaryType(p),
+    m_unitType(real),
+    m_dimensionType(d3),
+    m_xBoundaryType(p),
+    m_yBoundaryType(p),
+    m_zBoundaryType(p),
 
-	m_atomStyle(full),
+    m_atomStyle(full),
 
-        m_waterPotential(NONE),
+    m_waterPotential(NONE),
+
+    m_ensemble(NVT),
+    m_temperature(298.15),
+    m_nhChain(1),
 
     m_output(),  m_dirty(false), m_warned(false), readData(false)
   {
@@ -80,6 +84,12 @@ namespace Avogadro
         this, SLOT(setWaterPotential(int)));
     connect(ui.readDataLine, SIGNAL(editingFinished()),
         this, SLOT(setReadData()));
+    connect(ui.ensembleCombo, SIGNAL(currentIndexChanged(int)),
+        this, SLOT(setEnsemble(int)));
+    connect(ui.tempSpin, SIGNAL(valueChanged(double)),
+        this, SLOT(setTemperature(double)));
+    connect(ui.nhChainSpin, SIGNAL(valueChanged(int)),
+        this, SLOT(setNHChain(int)));
 
     connect(ui.previewText, SIGNAL(cursorPositionChanged()),
         this, SLOT(previewEdited()));
@@ -165,6 +175,9 @@ namespace Avogadro
     ui.yBoundaryCombo->setCurrentIndex(0);
     ui.zBoundaryCombo->setCurrentIndex(0);
     ui.waterPotentialCombo->setCurrentIndex(0);
+    ui.ensembleCombo->setCurrentIndex(0);
+    ui.tempSpin->setValue(298.15);
+    ui.nhChainSpin->setValue(1);
 
     ui.previewText->setText(generateInputDeck());
     ui.previewText->document()->setModified(false);
@@ -296,6 +309,37 @@ namespace Avogadro
             this, SLOT(updatePreviewText()));
     updatePreviewText();
   }
+  void LammpsInputDialog::setEnsemble(int n)
+  {
+    m_ensemble = (LammpsInputDialog::ensemble) n;
+    ui.ensembleCombo->setEnabled(true);
+    if(n==1)
+    {
+      ui.tempSpin->setValue(0.0);
+      ui.tempSpin->setEnabled(false);
+      ui.nhChainSpin->setValue(0);
+      ui.nhChainSpin->setEnabled(false);
+    }
+    else if(n==0)
+    {
+      ui.tempSpin->setEnabled(true);
+      ui.nhChainSpin->setEnabled(true);
+      ui.nhChainSpin->setValue(1);
+    }
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setTemperature(double n)
+  {
+    m_temperature = n;
+    ui.tempSpin->setEnabled(true);
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setNHChain(int n)
+  {
+    m_nhChain = n;
+    ui.nhChainSpin->setEnabled(true);
+    updatePreviewText();
+  }
 
 
   QString LammpsInputDialog::generateInputDeck()
@@ -325,6 +369,7 @@ namespace Avogadro
 
     mol << "# Settings\n";
     mol << "velocity       xxxxx\n";
+    mol << getEnsemble(m_ensemble) << "\n";
     mol << "\n";
 
     mol << "# Run the simulation\n";
@@ -500,7 +545,7 @@ namespace Avogadro
 	    << "bond_coeff      1 100.00   1.000\n"
 	    << "angle_coeff     1 100.00 109.47\n"
 	    << "special_bonds   lj/coul 0.0 0.0 0.5\n"
-	    << "fix             1 all shake 0.0001 20 0 b 1 a 1\n";
+	    << "fix             RigidOHBonds all shake 0.0001 20 0 b 1 a 1\n";
 	  return waterPotentialInput;
 	}
       case SPCE:
@@ -511,6 +556,39 @@ namespace Avogadro
 	  QTextStream water(&waterPotentialInput);
 	  water << "\n";
 	  return waterPotentialInput;
+	}
+    }
+  }
+  QString LammpsInputDialog::getEnsemble(ensemble t)
+  {
+    switch(t)
+    {
+      case NVT:
+	{
+	  QString     ensembleInput;
+	  QTextStream fix(&ensembleInput);
+	  fix << "fix            ensemble all nvt"
+	    << " temp " << m_temperature << " "
+	    << m_temperature << " 100 "
+	    << "tchain " << m_nhChain << "\n";
+	  return ensembleInput;
+	}
+      case NVE:
+	{
+	  QString     ensembleInput;
+	  QTextStream fix(&ensembleInput);
+	  fix << "fix            ensemble all nve\n";
+	  return ensembleInput;
+	}
+      default:
+	{
+	  QString     ensembleInput;
+	  QTextStream fix(&ensembleInput);
+	  fix << "fix            ensemble all nvt"
+	    << " temp " << m_temperature << " "
+	    << m_temperature << " 100 "
+	    << "tchain " << m_nhChain << "\n";
+	  return ensembleInput;
 	}
     }
   }

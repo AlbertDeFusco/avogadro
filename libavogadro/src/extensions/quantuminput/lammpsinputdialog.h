@@ -65,6 +65,7 @@ namespace Avogadro
 	    wavepacket};
     enum waterPotential{ NONE, SPC, SPCE};
     void setMolecule(Molecule *molecule);
+    enum ensemble{NVT, NVE};
 
     //enum calculationType{SP, OPT, FREQ};
     //enum theoryType{RHF, MP2, B3LYP, CCSD, CCSDT};
@@ -100,8 +101,12 @@ namespace Avogadro
     atomStyle m_atomStyle;
     waterPotential m_waterPotential;
 
+    //coordType m_coordType;
+    ensemble m_ensemble;
+    double m_temperature;
+    int m_nhChain;
     QString m_output;
-    coordType m_coordType;
+
     bool m_dirty;
     bool m_warned;
     bool readData;
@@ -115,6 +120,7 @@ namespace Avogadro
     QString getYBoundaryType(boundaryType t);
     QString getZBoundaryType(boundaryType t);
     QString getWaterPotential(waterPotential t);
+    QString getEnsemble(ensemble t);
     // Translate enums to strings
     //QString getCalculationType(calculationType t);
     //QString getWavefunction(void);
@@ -143,13 +149,6 @@ namespace Avogadro
 
     void setTitle();
     void setReadData();
-    //void setVersion(int);
-    //void setCalculation(int);
-    //void setTheory(int);
-    //void setBasis(int);
-    //void setMultiplicity(int);
-    //void setCharge(int);
-    //void setCoords(int);
 
     void setUnits(int);
     void setAtomStyle(int);
@@ -159,6 +158,10 @@ namespace Avogadro
     void setZBoundaryType(int);
 
     void setWaterPotential(int);
+
+    void setEnsemble(int);
+    void setTemperature(double);
+    void setNHChain(int);
 
   };
 }
