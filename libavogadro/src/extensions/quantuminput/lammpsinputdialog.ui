@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>788</width>
-    <height>666</height>
+    <width>774</width>
+    <height>697</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -33,6 +33,9 @@
      </property>
      <item row="0" column="0">
       <widget class="QLabel" name="label_7">
+       <property name="toolTip">
+        <string>Input file comments</string>
+       </property>
        <property name="text">
         <string>Title:</string>
        </property>
@@ -43,8 +46,11 @@
      </item>
      <item row="0" column="1" colspan="7">
       <widget class="QLineEdit" name="titleLine">
+       <property name="toolTip">
+        <string>Input file comments</string>
+       </property>
        <property name="text">
-        <string>Simulation title</string>
+        <string>Title</string>
        </property>
       </widget>
      </item>
@@ -57,6 +63,9 @@
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_units">
+       <property name="toolTip">
+        <string>Select the unit style to be used during the simulation.</string>
+       </property>
        <property name="whatsThis">
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -154,6 +163,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="6" column="0">
       <widget class="QLabel" name="label_atomstyle">
+       <property name="toolTip">
+        <string>Select atom_style used by the data file.</string>
+       </property>
        <property name="whatsThis">
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -171,6 +183,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="6" column="1">
       <widget class="QComboBox" name="atomStyleCombo">
+       <property name="toolTip">
+        <string>Select atom_style used by the data file.</string>
+       </property>
        <property name="whatsThis">
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -260,13 +275,20 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="6" column="2" colspan="2">
       <widget class="QLabel" name="label_readdata">
+       <property name="toolTip">
+        <string>Specify the name to be used for the coordinate file.</string>
+       </property>
        <property name="text">
         <string>Coordinate Data File</string>
        </property>
       </widget>
      </item>
      <item row="6" column="4" colspan="4">
-      <widget class="QLineEdit" name="readDataLine"/>
+      <widget class="QLineEdit" name="readDataLine">
+       <property name="toolTip">
+        <string>Specify the name to be used for the coordinate file.</string>
+       </property>
+      </widget>
      </item>
      <item row="8" column="0">
       <widget class="QLabel" name="label_therm">
@@ -311,6 +333,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="8" column="4">
       <widget class="QLabel" name="label">
+       <property name="toolTip">
+        <string>Select the number of Nosé-Hoover chains in the NVT ensemble.</string>
+       </property>
        <property name="text">
         <string>NH Chains</string>
        </property>
@@ -318,6 +343,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="8" column="5">
       <widget class="QSpinBox" name="nhChainSpin">
+       <property name="toolTip">
+        <string>Select the number of Nosé-Hoover chains in the NVT ensemble.</string>
+       </property>
        <property name="minimum">
         <number>0</number>
        </property>
@@ -351,6 +379,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="10" column="0">
       <widget class="QLabel" name="label_2">
+       <property name="toolTip">
+        <string>Time step for the simulation in units according to &quot;Units&quot; specification.</string>
+       </property>
        <property name="text">
         <string>Time Step</string>
        </property>
@@ -358,6 +389,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="10" column="1">
       <widget class="QDoubleSpinBox" name="stepSpin">
+       <property name="toolTip">
+        <string>Time step for the simulation in units according to &quot;Units&quot; specification.</string>
+       </property>
        <property name="singleStep">
         <double>0.500000000000000</double>
        </property>
@@ -368,6 +402,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="13" column="0">
       <widget class="QLabel" name="label_4">
+       <property name="toolTip">
+        <string>Filename of the XYZ file to write during the simulation.</string>
+       </property>
        <property name="text">
         <string>Dump XYZ</string>
        </property>
@@ -382,6 +419,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_dimension">
+       <property name="toolTip">
+        <string>Number of dimensions in the system.</string>
+       </property>
        <property name="text">
         <string>Dimensions</string>
        </property>
@@ -390,25 +430,11 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QComboBox" name="dimensionCombo">
-       <property name="currentIndex">
-        <number>1</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>2d</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>3d</string>
-        </property>
-       </item>
-      </widget>
-     </item>
      <item row="3" column="7">
       <widget class="QComboBox" name="zBoundaryCombo">
+       <property name="toolTip">
+        <string>Change Z boundary style.</string>
+       </property>
        <property name="currentIndex">
         <number>0</number>
        </property>
@@ -446,6 +472,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="3" column="6">
       <widget class="QComboBox" name="yBoundaryCombo">
+       <property name="toolTip">
+        <string>Change Y boundary style.</string>
+       </property>
        <property name="currentIndex">
         <number>0</number>
        </property>
@@ -483,6 +512,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="3" column="5">
       <widget class="QComboBox" name="xBoundaryCombo">
+       <property name="toolTip">
+        <string>Change X boundary style.</string>
+       </property>
        <property name="currentIndex">
         <number>0</number>
        </property>
@@ -520,6 +552,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="3" column="4">
       <widget class="QLabel" name="label_boundary">
+       <property name="toolTip">
+        <string>Select bondary Styles in X, Y and Z directions.</string>
+       </property>
        <property name="text">
         <string>Boundary</string>
        </property>
@@ -540,6 +575,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="2" column="4">
       <widget class="QLabel" name="label_5">
+       <property name="toolTip">
+        <string>Number of replicants in X, Y and Z directions.</string>
+       </property>
        <property name="text">
         <string>Replicate</string>
        </property>
@@ -559,19 +597,47 @@ p, li { white-space: pre-wrap; }
       </spacer>
      </item>
      <item row="2" column="5">
-      <widget class="QSpinBox" name="xReplicateSpin"/>
+      <widget class="QSpinBox" name="xReplicateSpin">
+       <property name="toolTip">
+        <string>Replicate the X direction.</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+      </widget>
      </item>
      <item row="2" column="6">
-      <widget class="QSpinBox" name="yReplicateSpin"/>
+      <widget class="QSpinBox" name="yReplicateSpin">
+       <property name="toolTip">
+        <string>Replicate the Y direction.</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+      </widget>
      </item>
      <item row="2" column="7">
-      <widget class="QSpinBox" name="zReplicateSpin"/>
+      <widget class="QSpinBox" name="zReplicateSpin">
+       <property name="toolTip">
+        <string>Replicate the Z direction.</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+      </widget>
      </item>
      <item row="13" column="1" colspan="3">
-      <widget class="QLineEdit" name="dumpXYZEdit"/>
+      <widget class="QLineEdit" name="dumpXYZEdit">
+       <property name="toolTip">
+        <string>Filename of the XYZ file to write during the simulation.</string>
+       </property>
+      </widget>
      </item>
      <item row="10" column="2">
       <widget class="QLabel" name="label_3">
+       <property name="toolTip">
+        <string>Total number of timesteps to run the simulation.</string>
+       </property>
        <property name="text">
         <string>Total Steps</string>
        </property>
@@ -579,6 +645,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="10" column="3">
       <widget class="QSpinBox" name="runSpin">
+       <property name="toolTip">
+        <string>Total number of timesteps to run the simulation.</string>
+       </property>
        <property name="maximum">
         <number>1000000000</number>
        </property>
@@ -632,6 +701,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="9" column="0">
       <widget class="QLabel" name="label_8">
+       <property name="toolTip">
+        <string>Set the initial atom velocities for the simulation.</string>
+       </property>
        <property name="text">
         <string>Initial Velocities</string>
        </property>
@@ -639,6 +711,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="9" column="1">
       <widget class="QComboBox" name="velocityDistCombo">
+       <property name="toolTip">
+        <string>Select the distribution of initial atom velocities.</string>
+       </property>
        <item>
         <property name="text">
          <string>gaussian</string>
@@ -653,6 +728,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="9" column="2">
       <widget class="QLabel" name="label_9">
+       <property name="toolTip">
+        <string>Set the initial atom velocities to match this temperature.</string>
+       </property>
        <property name="text">
         <string>Temperature</string>
        </property>
@@ -660,6 +738,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="9" column="3">
       <widget class="QDoubleSpinBox" name="velocityTempSpin">
+       <property name="toolTip">
+        <string>Set the initial atom velocities to match this temperature.</string>
+       </property>
        <property name="maximum">
         <double>20000.000000000000000</double>
        </property>
@@ -673,6 +754,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="9" column="4" colspan="2">
       <widget class="QCheckBox" name="zeroMOMCheck">
+       <property name="toolTip">
+        <string>Remove system linear momentum from initial velocities.</string>
+       </property>
        <property name="text">
         <string>Zero Linear Momentum</string>
        </property>
@@ -683,6 +767,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="9" column="6" colspan="2">
       <widget class="QCheckBox" name="zeroLCheck">
+       <property name="toolTip">
+        <string>Remove system angular momentum from initial velocities.</string>
+       </property>
        <property name="text">
         <string>Zero Angular Momentum</string>
        </property>
@@ -706,23 +793,12 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="12" column="0">
       <widget class="QLabel" name="label_10">
+       <property name="toolTip">
+        <string>Control the thermodynamic output during the simulation.</string>
+       </property>
        <property name="text">
         <string>Output</string>
        </property>
-      </widget>
-     </item>
-     <item row="12" column="1">
-      <widget class="QComboBox" name="thermoStyleCombo">
-       <item>
-        <property name="text">
-         <string>One Line</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Multi Line</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item row="12" column="2">
@@ -740,6 +816,56 @@ p, li { white-space: pre-wrap; }
        <property name="value">
         <number>50</number>
        </property>
+      </widget>
+     </item>
+     <item row="12" column="4" colspan="4">
+      <spacer name="horizontalSpacer_9">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="dimensionCombo">
+       <property name="toolTip">
+        <string>Number of dimensions in the system.</string>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>2d</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>3d</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="12" column="1">
+      <widget class="QComboBox" name="thermoStyleCombo">
+       <property name="toolTip">
+        <string>Thermodynamic output style.</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>One Line</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Multi Line</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>

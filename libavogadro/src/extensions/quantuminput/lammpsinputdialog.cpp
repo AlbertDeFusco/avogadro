@@ -62,9 +62,9 @@ namespace Avogadro
 
     m_timeStep(2.0),
     m_runSteps(50),
-    m_xReplicate(0),
-    m_yReplicate(0),
-    m_zReplicate(0),
+    m_xReplicate(1),
+    m_yReplicate(1),
+    m_zReplicate(1),
 
     m_dumpStep(1),
 
@@ -216,9 +216,9 @@ namespace Avogadro
     ui.nhChainSpin->setValue(1);
     ui.stepSpin->setValue(2.0);
     ui.runSpin->setValue(50);
-    ui.xReplicateSpin->setValue(0);
-    ui.yReplicateSpin->setValue(0);
-    ui.zReplicateSpin->setValue(0);
+    ui.xReplicateSpin->setValue(1);
+    ui.yReplicateSpin->setValue(1);
+    ui.zReplicateSpin->setValue(1);
     ui.dumpStepSpin->setValue(1);
     ui.thermoStyleCombo->setCurrentIndex(0);
     ui.thermoSpin->setValue(50);
@@ -285,7 +285,7 @@ namespace Avogadro
       setZBoundaryType(0);
       ui.zBoundaryCombo->setCurrentIndex(0);
       ui.zBoundaryCombo->setEnabled(false);
-      ui.zReplicateSpin->setValue(0);
+      ui.zReplicateSpin->setValue(1);
       ui.zReplicateSpin->setEnabled(false);
     }
     if(n==1)
@@ -489,13 +489,10 @@ namespace Avogadro
     mol << "# Atom Definition\n";
     if(readData)
       mol << "read_data      " << m_readData << "\n";
-    if(m_xReplicate+m_yReplicate+m_zReplicate > 0)
-    {
-      mol << "replicate      "
-	<< m_xReplicate << " "
-	<< m_yReplicate << " "
-	<< m_zReplicate << "\n";
-    }
+    mol << "replicate      "
+      << m_xReplicate << " "
+      << m_yReplicate << " "
+      << m_zReplicate << "\n";
 
     mol << "\n" << getWaterPotential(m_waterPotential) << "\n";
 
@@ -513,7 +510,7 @@ namespace Avogadro
 
     mol << "# Output\n";
     if(m_dumpXYZ != "")
-      mol << "dump         dumpXYZ all xyz "
+      mol << "dump           dumpXYZ all xyz "
 	<< m_dumpStep << " " << m_dumpXYZ << "\n";
     mol << "thermo_style   " << getThermoStyle(m_thermoStyle) << "\n";
     mol << "thermo         " << m_thermoInterval << "\n";
