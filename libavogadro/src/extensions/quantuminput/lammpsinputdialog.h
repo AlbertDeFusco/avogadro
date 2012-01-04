@@ -66,6 +66,8 @@ namespace Avogadro
     enum waterPotential{ NONE, SPC, SPCE};
     void setMolecule(Molecule *molecule);
     enum ensemble{NVT, NVE};
+    enum velocityDist{gaussian, uniform};
+    enum thermoStyle{one, multi};
 
     //enum calculationType{SP, OPT, FREQ};
     //enum theoryType{RHF, MP2, B3LYP, CCSD, CCSDT};
@@ -80,16 +82,6 @@ namespace Avogadro
 
   private:
     Ui::LammpsInputDialog ui;
-//    Molecule* m_molecule;
-
-    // Internal data structure for the simulation
-    //bool m_2009;
-    //calculationType m_calculationType;
-    //theoryType m_theoryType;
-    //basisType m_basisType;
-    //int m_multiplicity;
-    //int m_charge;
-    //int m_num_elec;
 
     //QString m_title;
     QString m_readData;
@@ -105,8 +97,22 @@ namespace Avogadro
     ensemble m_ensemble;
     double m_temperature;
     int m_nhChain;
-    QString m_output;
+    double m_timeStep;
+    int m_runSteps;
+    int m_xReplicate;
+    int m_yReplicate;
+    int m_zReplicate;
+    QString m_dumpXYZ;
+    int m_dumpStep;
+    velocityDist m_velocityDist;
+    double m_velocityTemp;
+    bool m_zeroMOM;
+    bool m_zeroL;
+    thermoStyle m_thermoStyle;
+    int m_thermoInterval;
 
+
+    QString m_output;
     bool m_dirty;
     bool m_warned;
     bool readData;
@@ -121,6 +127,10 @@ namespace Avogadro
     QString getZBoundaryType(boundaryType t);
     QString getWaterPotential(waterPotential t);
     QString getEnsemble(ensemble t);
+    QString getVelocityDist(velocityDist t);
+    QString getZeroMOM();
+    QString getZeroL();
+    QString getThermoStyle(thermoStyle t);
     // Translate enums to strings
     //QString getCalculationType(calculationType t);
     //QString getWavefunction(void);
@@ -162,6 +172,21 @@ namespace Avogadro
     void setEnsemble(int);
     void setTemperature(double);
     void setNHChain(int);
+
+    void setTimeStep(double);
+    void setRunSteps(int);
+    void setXReplicate(int);
+    void setYReplicate(int);
+    void setZReplicate(int);
+    void setDumpXYZ();
+    void setDumpStep(int);
+
+    void setVelocityDist(int);
+    void setVelocityTemp(double);
+    void setZeroMOM(bool);
+    void setZeroL(bool);
+    void setThermoStyle(int);
+    void setThermoInterval(int);
 
   };
 }

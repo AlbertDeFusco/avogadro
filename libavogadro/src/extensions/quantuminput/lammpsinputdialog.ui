@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>621</width>
-    <height>508</height>
+    <width>788</width>
+    <height>666</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -44,7 +44,7 @@
      <item row="0" column="1" colspan="7">
       <widget class="QLineEdit" name="titleLine">
        <property name="text">
-        <string>Title</string>
+        <string>Simulation title</string>
        </property>
       </widget>
      </item>
@@ -65,7 +65,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://lammps.sandia.gov/doc/units.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;http://lammps.sandia.gov/doc/units.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="text">
-        <string>units</string>
+        <string>Units</string>
        </property>
        <property name="buddy">
         <cstring>unitsCombo</cstring>
@@ -119,159 +119,14 @@ p, li { white-space: pre-wrap; }
        </item>
       </widget>
      </item>
-     <item row="2" column="2">
-      <widget class="QLabel" name="label_dimension">
-       <property name="text">
-        <string>dimension</string>
-       </property>
-       <property name="buddy">
-        <cstring>dimensionCombo</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="3">
-      <widget class="QComboBox" name="dimensionCombo">
-       <property name="currentIndex">
-        <number>1</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>2d</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>3d</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="2" column="4">
-      <widget class="QLabel" name="label_boundary">
-       <property name="text">
-        <string>boundary</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="5">
-      <widget class="QComboBox" name="xBoundaryCombo">
-       <property name="currentIndex">
-        <number>0</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>p</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>s</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>f</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>m</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>fs</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>fm</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="2" column="6">
-      <widget class="QComboBox" name="yBoundaryCombo">
-       <property name="currentIndex">
-        <number>0</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>p</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>s</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>f</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>m</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>fs</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>fm</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="2" column="7">
-      <widget class="QComboBox" name="zBoundaryCombo">
-       <property name="currentIndex">
-        <number>0</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>p</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>s</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>f</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>m</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>fs</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>fm</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="4" column="0">
+     <item row="5" column="0">
       <widget class="QLabel" name="label_waterPotential">
        <property name="text">
         <string>Water Potential</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="5" column="1">
       <widget class="QComboBox" name="waterPotentialCombo">
        <item>
         <property name="text">
@@ -290,14 +145,14 @@ p, li { white-space: pre-wrap; }
        </item>
       </widget>
      </item>
-     <item row="3" column="0" colspan="8">
+     <item row="4" column="0" colspan="8">
       <widget class="Line" name="line_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
+     <item row="6" column="0">
       <widget class="QLabel" name="label_atomstyle">
        <property name="whatsThis">
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -307,14 +162,14 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://lammps.sandia.gov/doc/atom_style.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;http://lammps.sandia.gov/doc/atom_style.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="text">
-        <string>atom_style</string>
+        <string>Atom Style</string>
        </property>
        <property name="buddy">
         <cstring>atomStyleCombo</cstring>
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
+     <item row="6" column="1">
       <widget class="QComboBox" name="atomStyleCombo">
        <property name="whatsThis">
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -403,24 +258,24 @@ p, li { white-space: pre-wrap; }
        </item>
       </widget>
      </item>
-     <item row="5" column="2">
+     <item row="6" column="2" colspan="2">
       <widget class="QLabel" name="label_readdata">
        <property name="text">
-        <string>read_data</string>
+        <string>Coordinate Data File</string>
        </property>
       </widget>
      </item>
-     <item row="5" column="3" colspan="5">
+     <item row="6" column="4" colspan="4">
       <widget class="QLineEdit" name="readDataLine"/>
      </item>
-     <item row="7" column="0">
+     <item row="8" column="0">
       <widget class="QLabel" name="label_therm">
        <property name="text">
         <string>Ensemble</string>
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="8" column="1">
       <widget class="QComboBox" name="ensembleCombo">
        <item>
         <property name="text">
@@ -434,17 +289,17 @@ p, li { white-space: pre-wrap; }
        </item>
       </widget>
      </item>
-     <item row="7" column="2">
+     <item row="8" column="2">
       <widget class="QLabel" name="label_temp">
        <property name="text">
-        <string>temp</string>
+        <string>Temperature</string>
        </property>
       </widget>
      </item>
-     <item row="7" column="3">
+     <item row="8" column="3">
       <widget class="QDoubleSpinBox" name="tempSpin">
        <property name="decimals">
-        <number>4</number>
+        <number>2</number>
        </property>
        <property name="maximum">
         <double>20000.000000000000000</double>
@@ -454,21 +309,24 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="7" column="4">
+     <item row="8" column="4">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>chain</string>
+        <string>NH Chains</string>
        </property>
       </widget>
      </item>
-     <item row="7" column="5">
+     <item row="8" column="5">
       <widget class="QSpinBox" name="nhChainSpin">
+       <property name="minimum">
+        <number>0</number>
+       </property>
        <property name="value">
         <number>1</number>
        </property>
       </widget>
      </item>
-     <item row="4" column="2" colspan="6">
+     <item row="5" column="2" colspan="6">
       <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -481,13 +339,406 @@ p, li { white-space: pre-wrap; }
        </property>
       </spacer>
      </item>
-     <item row="6" column="0" colspan="8">
+     <item row="7" column="0" colspan="8">
       <widget class="Line" name="line_3">
        <property name="lineWidth">
         <number>1</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Time Step</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1">
+      <widget class="QDoubleSpinBox" name="stepSpin">
+       <property name="singleStep">
+        <double>0.500000000000000</double>
+       </property>
+       <property name="value">
+        <double>2.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="13" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Dump XYZ</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="0" colspan="8">
+      <widget class="Line" name="line_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_dimension">
+       <property name="text">
+        <string>Dimensions</string>
+       </property>
+       <property name="buddy">
+        <cstring>dimensionCombo</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="dimensionCombo">
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>2d</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>3d</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="7">
+      <widget class="QComboBox" name="zBoundaryCombo">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>p</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>s</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>f</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>m</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>fs</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>fm</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="6">
+      <widget class="QComboBox" name="yBoundaryCombo">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>p</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>s</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>f</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>m</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>fs</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>fm</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="5">
+      <widget class="QComboBox" name="xBoundaryCombo">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>p</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>s</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>f</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>m</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>fs</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>fm</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="4">
+      <widget class="QLabel" name="label_boundary">
+       <property name="text">
+        <string>Boundary</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2" colspan="2">
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="2" column="4">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Replicate</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2" colspan="2">
+      <spacer name="horizontalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="2" column="5">
+      <widget class="QSpinBox" name="xReplicateSpin"/>
+     </item>
+     <item row="2" column="6">
+      <widget class="QSpinBox" name="yReplicateSpin"/>
+     </item>
+     <item row="2" column="7">
+      <widget class="QSpinBox" name="zReplicateSpin"/>
+     </item>
+     <item row="13" column="1" colspan="3">
+      <widget class="QLineEdit" name="dumpXYZEdit"/>
+     </item>
+     <item row="10" column="2">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Total Steps</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="3">
+      <widget class="QSpinBox" name="runSpin">
+       <property name="maximum">
+        <number>1000000000</number>
+       </property>
+       <property name="value">
+        <number>50</number>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="4" colspan="4">
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="13" column="4">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Dump Interval</string>
+       </property>
+      </widget>
+     </item>
+     <item row="13" column="5">
+      <widget class="QSpinBox" name="dumpStepSpin">
+       <property name="maximum">
+        <number>10000</number>
+       </property>
+       <property name="value">
+        <number>1</number>
+       </property>
+      </widget>
+     </item>
+     <item row="13" column="6" colspan="2">
+      <spacer name="horizontalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>Initial Velocities</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QComboBox" name="velocityDistCombo">
+       <item>
+        <property name="text">
+         <string>gaussian</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>uniform</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="9" column="2">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>Temperature</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="3">
+      <widget class="QDoubleSpinBox" name="velocityTempSpin">
+       <property name="maximum">
+        <double>20000.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.500000000000000</double>
+       </property>
+       <property name="value">
+        <double>298.149999999999977</double>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="4" colspan="2">
+      <widget class="QCheckBox" name="zeroMOMCheck">
+       <property name="text">
+        <string>Zero Linear Momentum</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="6" colspan="2">
+      <widget class="QCheckBox" name="zeroLCheck">
+       <property name="text">
+        <string>Zero Angular Momentum</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="6" colspan="2">
+      <spacer name="horizontalSpacer_8">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="12" column="0">
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>Output</string>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="1">
+      <widget class="QComboBox" name="thermoStyleCombo">
+       <item>
+        <property name="text">
+         <string>One Line</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Multi Line</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="12" column="2">
+      <widget class="QLabel" name="label_11">
+       <property name="text">
+        <string>Output Interval</string>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="3">
+      <widget class="QSpinBox" name="thermoSpin">
+       <property name="maximum">
+        <number>10000</number>
+       </property>
+       <property name="value">
+        <number>50</number>
        </property>
       </widget>
      </item>

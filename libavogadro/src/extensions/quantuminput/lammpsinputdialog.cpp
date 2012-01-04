@@ -60,6 +60,21 @@ namespace Avogadro
     m_temperature(298.15),
     m_nhChain(1),
 
+    m_timeStep(2.0),
+    m_runSteps(50),
+    m_xReplicate(0),
+    m_yReplicate(0),
+    m_zReplicate(0),
+
+    m_dumpStep(1),
+
+    m_velocityDist(gaussian),
+    m_velocityTemp(298.15),
+    m_zeroMOM(true),
+    m_zeroL(true),
+    m_thermoStyle(one),
+    m_thermoInterval(50),
+
     m_output(),  m_dirty(false), m_warned(false), readData(false)
   {
     ui.setupUi(this);
@@ -90,6 +105,32 @@ namespace Avogadro
         this, SLOT(setTemperature(double)));
     connect(ui.nhChainSpin, SIGNAL(valueChanged(int)),
         this, SLOT(setNHChain(int)));
+    connect(ui.stepSpin, SIGNAL(valueChanged(double)),
+	this, SLOT(setTimeStep(double)));
+    connect(ui.runSpin, SIGNAL(valueChanged(int)),
+	this, SLOT(setRunSteps(int)));
+    connect(ui.xReplicateSpin, SIGNAL(valueChanged(int)),
+	this, SLOT(setXReplicate(int)));
+    connect(ui.yReplicateSpin, SIGNAL(valueChanged(int)),
+	this, SLOT(setYReplicate(int)));
+    connect(ui.zReplicateSpin, SIGNAL(valueChanged(int)),
+	this, SLOT(setZReplicate(int)));
+    connect(ui.dumpXYZEdit, SIGNAL(editingFinished()),
+	this, SLOT(setDumpXYZ()));
+    connect(ui.dumpStepSpin, SIGNAL(valueChanged(int)),
+	this, SLOT(setDumpStep(int)));
+    connect(ui.velocityDistCombo, SIGNAL(currentIndexChanged(int)),
+	this, SLOT(setVelocityDist(int)));
+    connect(ui.velocityTempSpin, SIGNAL(valueChanged(double)),
+	this, SLOT(setVelocityTemp(double)));
+    connect(ui.zeroMOMCheck, SIGNAL(toggled(bool)),
+	this, SLOT(setZeroMOM(bool)));
+    connect(ui.zeroLCheck, SIGNAL(toggled(bool)),
+	this, SLOT(setZeroL(bool)));
+    connect(ui.thermoStyleCombo, SIGNAL(currentIndexChanged(int)),
+	this, SLOT(setThermoStyle(int)));
+    connect(ui.thermoSpin, SIGNAL(valueChanged(int)),
+	this, SLOT(setThermoInterval(int)));
 
     connect(ui.previewText, SIGNAL(cursorPositionChanged()),
         this, SLOT(previewEdited()));
@@ -162,11 +203,6 @@ namespace Avogadro
   {
     // Reset the form to defaults
     deckDirty(false);
-    //ui.calculationCombo->setCurrentIndex(1);
-    //ui.theoryCombo->setCurrentIndex(3);
-    //ui.basisCombo->setCurrentIndex(2);
-    //ui.multiplicitySpin->setValue(0);
-    //ui.chargeSpin->setValue(0);
 
     ui.unitsCombo->setCurrentIndex(1);
     ui.atomStyleCombo->setCurrentIndex(7);
@@ -178,6 +214,15 @@ namespace Avogadro
     ui.ensembleCombo->setCurrentIndex(0);
     ui.tempSpin->setValue(298.15);
     ui.nhChainSpin->setValue(1);
+    ui.stepSpin->setValue(2.0);
+    ui.runSpin->setValue(50);
+    ui.xReplicateSpin->setValue(0);
+    ui.yReplicateSpin->setValue(0);
+    ui.zReplicateSpin->setValue(0);
+    ui.dumpStepSpin->setValue(1);
+    ui.thermoStyleCombo->setCurrentIndex(0);
+    ui.thermoSpin->setValue(50);
+
 
     ui.previewText->setText(generateInputDeck());
     ui.previewText->document()->setModified(false);
@@ -240,10 +285,13 @@ namespace Avogadro
       setZBoundaryType(0);
       ui.zBoundaryCombo->setCurrentIndex(0);
       ui.zBoundaryCombo->setEnabled(false);
+      ui.zReplicateSpin->setValue(0);
+      ui.zReplicateSpin->setEnabled(false);
     }
     if(n==1)
     {
       ui.zBoundaryCombo->setEnabled(true);
+      ui.zReplicateSpin->setEnabled(true);
     }
     updatePreviewText();
   }
@@ -340,6 +388,83 @@ namespace Avogadro
     ui.nhChainSpin->setEnabled(true);
     updatePreviewText();
   }
+  void LammpsInputDialog::setTimeStep(double n)
+  {
+    m_timeStep = n;
+    ui.stepSpin->setEnabled(true);
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setRunSteps(int n)
+  {
+    m_runSteps = n;
+    ui.runSpin->setEnabled(true);
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setXReplicate(int n)
+  {
+    m_xReplicate = n;
+    ui.xReplicateSpin->setEnabled(true);
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setYReplicate(int n)
+  {
+    m_yReplicate = n;
+    ui.yReplicateSpin->setEnabled(true);
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setZReplicate(int n)
+  {
+    m_zReplicate = n;
+    ui.zReplicateSpin->setEnabled(true);
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setDumpStep(int n)
+  {
+    m_dumpStep = n;
+    ui.dumpStepSpin->setEnabled(true);
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setDumpXYZ()
+  {
+    m_dumpXYZ = ui.dumpXYZEdit->text();
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setVelocityDist(int n)
+  {
+    m_velocityDist = (LammpsInputDialog::velocityDist) n;
+    ui.velocityDistCombo->setEnabled(true);
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setVelocityTemp(double n)
+  {
+    m_velocityTemp = n;
+    ui.velocityTempSpin->setEnabled(true);
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setZeroMOM(bool state)
+  {
+    m_zeroMOM = state;
+    ui.zeroMOMCheck->setEnabled(true);
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setZeroL(bool state)
+  {
+    m_zeroL = state;
+    ui.zeroLCheck->setEnabled(true);
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setThermoStyle(int n)
+  {
+    m_thermoStyle = (LammpsInputDialog::thermoStyle) n;
+    ui.thermoStyleCombo->setEnabled(true);
+    updatePreviewText();
+  }
+  void LammpsInputDialog::setThermoInterval(int n)
+  {
+    m_thermoInterval = n;
+    ui.thermoSpin->setEnabled(true);
+    updatePreviewText();
+  }
 
 
   QString LammpsInputDialog::generateInputDeck()
@@ -359,22 +484,44 @@ namespace Avogadro
       << getYBoundaryType(m_yBoundaryType) << " "
       << getZBoundaryType(m_zBoundaryType) << "\n";
     mol << "atom_style     " << getAtomStyle(m_atomStyle) << "\n";
-
-    mol << "\n" << getWaterPotential(m_waterPotential) << "\n";
+    mol << "\n";
 
     mol << "# Atom Definition\n";
     if(readData)
       mol << "read_data      " << m_readData << "\n";
-    mol << "\n";
+    if(m_xReplicate+m_yReplicate+m_zReplicate > 0)
+    {
+      mol << "replicate      "
+	<< m_xReplicate << " "
+	<< m_yReplicate << " "
+	<< m_zReplicate << "\n";
+    }
+
+    mol << "\n" << getWaterPotential(m_waterPotential) << "\n";
 
     mol << "# Settings\n";
-    mol << "velocity       xxxxx\n";
+    mol << "velocity       all create "
+      << fixed << qSetRealNumberPrecision(2) << m_velocityTemp << " "
+      << "4928459 "
+      << "rot " << getZeroL() << " "
+      << "mom " << getZeroMOM() << " "
+      << "dist " << getVelocityDist(m_velocityDist) << "\n";
     mol << getEnsemble(m_ensemble) << "\n";
+    mol << "timestep       " 
+      << fixed << qSetRealNumberPrecision(1) << m_timeStep << "\n";
+    mol << "\n";
+
+    mol << "# Output\n";
+    if(m_dumpXYZ != "")
+      mol << "dump         dumpXYZ all xyz "
+	<< m_dumpStep << " " << m_dumpXYZ << "\n";
+    mol << "thermo_style   " << getThermoStyle(m_thermoStyle) << "\n";
+    mol << "thermo         " << m_thermoInterval << "\n";
     mol << "\n";
 
     mol << "# Run the simulation\n";
-    mol << "run            xxxxx\n";
-    mol << '\n';
+    mol << "run            " << m_runSteps << "\n";
+    mol << "\n";
 
 
     return buffer;
@@ -532,11 +679,11 @@ namespace Avogadro
 	  determineAtomTypesSPC(Hydrogen, Oxygen);
 	  water 
 	    << "#The SPC water potential\n"
-	    << "pair_style	lj/cut/coul/cut 9.8 9.8\n"
-	    << "pair_coeff	" 
+	    << "pair_style      lj/cut/coul/cut 9.8 9.8\n"
+	    << "pair_coeff      " 
 	        << Oxygen << " " << Oxygen 
 	        << " 0.15535 3.166\n"
-	    << "pair_coeff	"
+	    << "pair_coeff      "
 	        << "* " << Hydrogen << " 0.00000 0.0000\n"
 	    << "bond_style      harmonic\n"
 	    << "angle_style     harmonic\n"
@@ -568,8 +715,10 @@ namespace Avogadro
 	  QString     ensembleInput;
 	  QTextStream fix(&ensembleInput);
 	  fix << "fix            ensemble all nvt"
-	    << " temp " << m_temperature << " "
-	    << m_temperature << " 100 "
+	    << " temp " 
+	    << fixed << qSetRealNumberPrecision(2) << m_temperature << " "
+	    << fixed << qSetRealNumberPrecision(2) << m_temperature 
+	    << " 100 "
 	    << "tchain " << m_nhChain << "\n";
 	  return ensembleInput;
 	}
@@ -585,11 +734,51 @@ namespace Avogadro
 	  QString     ensembleInput;
 	  QTextStream fix(&ensembleInput);
 	  fix << "fix            ensemble all nvt"
-	    << " temp " << m_temperature << " "
-	    << m_temperature << " 100 "
+	    << " temp " 
+	    << fixed << qSetRealNumberPrecision(2) << m_temperature << " "
+	    << fixed << qSetRealNumberPrecision(2) << m_temperature 
+	    << " 100 "
 	    << "tchain " << m_nhChain << "\n";
 	  return ensembleInput;
 	}
+    }
+  }
+  QString LammpsInputDialog::getVelocityDist(velocityDist t)
+  {
+    switch(t)
+    {
+      case gaussian:
+	return "gaussian";
+      case uniform:
+	return "uniform";
+      default:
+	return "gaussian";
+    }
+  }
+  QString LammpsInputDialog::getZeroMOM()
+  {
+    if(m_zeroMOM)
+      return "yes";
+    else
+      return "no";
+  }
+  QString LammpsInputDialog::getZeroL()
+  {
+    if(m_zeroL)
+      return "yes";
+    else
+      return "no";
+  }
+  QString LammpsInputDialog::getThermoStyle(thermoStyle t)
+  {
+    switch(t)
+    {
+      case one:
+	return "one";
+      case multi:
+	return "multi";
+      default:
+	return "one";
     }
   }
 
