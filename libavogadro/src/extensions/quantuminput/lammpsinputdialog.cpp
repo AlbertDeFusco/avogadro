@@ -679,7 +679,7 @@ namespace Avogadro
 	    << "pair_style      lj/cut/coul/cut 9.8 9.8\n"
 	    << "pair_coeff      " 
 	        << Oxygen << " " << Oxygen 
-	        << " 0.15535 3.166\n"
+	        << " 0.15535 3.5533\n"
 	    << "pair_coeff      "
 	        << "* " << Hydrogen << " 0.00000 0.0000\n"
 	    << "bond_style      harmonic\n"
@@ -693,7 +693,31 @@ namespace Avogadro
 	  return waterPotentialInput;
 	}
       case SPCE:
-	return "SPC/E\n";
+	{
+	  QString     waterPotentialInput;
+	  QTextStream water(&waterPotentialInput);
+	  int Hydrogen;
+	  int Oxygen;
+	  determineAtomTypesSPC(Hydrogen, Oxygen);
+	  water 
+	    << "#The SPC/E water potential\n"
+	    << "pair_style      lj/cut/coul/long 9.8 9.8\n"
+	    << "kspace_style    pppm 1.0e-4\n"
+	    << "pair_coeff      " 
+	        << Oxygen << " " << Oxygen 
+	        << " 0.15535 3.5533\n"
+	    << "pair_coeff      "
+	        << "* " << Hydrogen << " 0.00000 0.0000\n"
+	    << "bond_style      harmonic\n"
+	    << "angle_style     harmonic\n"
+	    << "dihedral_style  none\n"
+	    << "improper_style  none\n"
+	    << "bond_coeff      1 100.00   1.000\n"
+	    << "angle_coeff     1 100.00 109.47\n"
+	    << "special_bonds   lj/coul 0.0 0.0 0.5\n"
+	    << "fix             RigidOHBonds all shake 0.0001 20 0 b 1 a 1\n";
+	  return waterPotentialInput;
+	}
       default:
 	{
 	  QString     waterPotentialInput;
