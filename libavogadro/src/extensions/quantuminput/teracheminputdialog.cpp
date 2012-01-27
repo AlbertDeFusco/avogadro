@@ -340,7 +340,7 @@ namespace Avogadro
     switch (t)
     {
       case STO3G:
-        return "STO-3G";
+        return "sto-3g";
       case B321G:
         return "3-21G";
       case B631Gd:
