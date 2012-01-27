@@ -1,7 +1,7 @@
 /**********************************************************************
   TeraChemInputDialog - Dialog for generating Q-Chem input decks
 
-  Copyright (C) 2008-2009 Marcus D. Hanwell
+  Copyright (C) 2012 Albert DeFusco
 
   This file is part of the Avogadro molecular editor project.
   For more information, see <http://avogadro.openmolecules.net/>
@@ -40,9 +40,15 @@ using namespace OpenBabel;
 namespace Avogadro
 {
   TeraChemInputDialog::TeraChemInputDialog(QWidget *parent, Qt::WindowFlags f)
-    : InputDialog(parent, f), m_calculationType(OPT),
-    m_theoryType(B3LYP), m_basisType(B631Gd),
-    m_output(), m_coordType(CARTESIAN), m_dirty(false), m_warned(false)
+    : InputDialog(parent, f),
+
+    m_calculationType(SP),
+    m_theoryType(HF),
+    m_basisType(STO3G),
+    m_output(),
+    m_unrestricted(false),
+
+    m_dirty(false), m_warned(false)
   {
     ui.setupUi(this);
     // Connect the GUI elements to the correct slots
@@ -58,8 +64,6 @@ namespace Avogadro
         this, SLOT(setMultiplicity(int)));
     connect(ui.chargeSpin, SIGNAL(valueChanged(int)),
         this, SLOT(setCharge(int)));
-    connect(ui.coordCombo, SIGNAL(currentIndexChanged(int)),
-        this, SLOT(setCoords(int)));
     connect(ui.previewText, SIGNAL(cursorPositionChanged()),
         this, SLOT(previewEdited()));
     connect(ui.generateButton, SIGNAL(clicked()),
@@ -70,6 +74,10 @@ namespace Avogadro
         this, SLOT(moreClicked()));
     connect(ui.enableFormButton, SIGNAL(clicked()),
         this, SLOT(enableFormClicked()));
+    connect(ui.checkUnrestricted, SIGNAL(toggled(bool)),
+	this, SLOT(setUnrestricted(bool)));
+    connect(ui.coordFile, SIGNAL(editingFinished()),
+        this, SLOT(setCoordFile()));
 
     QSettings settings;
     readSettings(settings);
@@ -116,7 +124,7 @@ namespace Avogadro
       m_warned = true;
       QMessageBox msgBox;
 
-      msgBox.setWindowTitle(tr("Q-Chem Input Deck Generator Warning"));
+      msgBox.setWindowTitle(tr("TeraChem Input Deck Generator Warning"));
       msgBox.setText(tr("Would you like to update the preview text, losing all changes made in the Q-Chem input deck preview pane?"));
       msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
 
@@ -147,8 +155,8 @@ namespace Avogadro
   {
     // Reset the form to defaults
     deckDirty(false);
-    ui.calculationCombo->setCurrentIndex(1);
-    ui.theoryCombo->setCurrentIndex(3);
+    ui.calculationCombo->setCurrentIndex(0);
+    ui.theoryCombo->setCurrentIndex(1);
     ui.basisCombo->setCurrentIndex(2);
     ui.multiplicitySpin->setValue(0);
     ui.chargeSpin->setValue(0);
@@ -158,7 +166,7 @@ namespace Avogadro
 
   void TeraChemInputDialog::generateClicked()
   {
-    saveInputFile(ui.previewText->toPlainText(), tr("QChem Input Deck"), QString("qcin"));
+    saveInputFile(ui.previewText->toPlainText(), tr("TeraChem Input Deck"), QString("tcin"));
   }
 
   void TeraChemInputDialog::moreClicked()
@@ -215,6 +223,14 @@ namespace Avogadro
   void TeraChemInputDialog::setMultiplicity(int n)
   {
     m_multiplicity = n;
+    if(m_multiplicity != 1) {
+      m_unrestricted = true;
+      ui.checkUnrestricted->setChecked(true);
+      ui.checkUnrestricted->setEnabled(false);
+    }
+    else if (m_multiplicity == 1)
+      ui.checkUnrestricted->setEnabled(true);
+
     updatePreviewText();
   }
   void TeraChemInputDialog::setCharge(int n)
@@ -223,9 +239,15 @@ namespace Avogadro
     updatePreviewText();
   }
 
-  void TeraChemInputDialog::setCoords(int n)
+  void TeraChemInputDialog::setUnrestricted(bool n)
   {
-    m_coordType = (TeraChemInputDialog::coordType) n;
+    m_unrestricted = n;
+    updatePreviewText();
+  }
+
+  void TeraChemInputDialog::setCoordFile()
+  {
+    m_coordFile = ui.coordFile->text();
     updatePreviewText();
   }
 
@@ -235,170 +257,24 @@ namespace Avogadro
     QString buffer;
     QTextStream mol(&buffer);
 
-    // Begin the job specification
-    mol << "$rem\n";
+    // Title line
+    mol << "#\n# " << m_title << "\n#\n\n";
 
     // Now for the calculation type
-    mol << "   JOBTYPE " << getCalculationType(m_calculationType) << '\n';
+    mol << "run            " << getCalculationType(m_calculationType) 
+      << "\n\n";
 
     // Now specify the job type and basis set
-    mol << "   EXCHANGE " << getTheoryType(m_theoryType) << '\n';
-    mol << "   " << getBasisType(m_basisType) << '\n';
+    mol << "method         " << getTheoryType(m_theoryType) << "\n";
+    mol << "basis          " << getBasisType(m_basisType) << "\n";
+    // Now for the charge and multiplicity
+    mol << "charge         " << m_charge << "\n";
+    mol << "spinmul        " << m_multiplicity << "\n\n";
 
-    // Output parameters for some programs
-    mol << "   GUI=2\n";
+    mol << "coordinates    " << m_coordFile << "\n\n";
 
     // End the job spec section
-    mol << "$end\n\n";
-
-    // Title line
-    mol << "$comment\n" << m_title << "\n$end\n\n";
-
-    // Begin the molecule specification
-    mol << "$molecule\n";
-
-    // Now for the charge and multiplicity
-    mol << "   " << m_charge << ' ' << m_multiplicity << '\n';
-
-    // Now to output the actual molecular coordinates
-    // Cartesian coordinates
-    if (m_molecule && m_coordType == CARTESIAN)
-    {
-      QTextStream mol(&buffer);
-
-      OpenBabel::OBMol obmol = m_molecule->OBMol();
-      std::vector<std::vector<int> > fragList;
-      obmol.ContigFragList(fragList);
-
-      for (unsigned int frag = 0; frag < fragList.size(); ++frag) {
-        for (unsigned int idx = 0; idx < fragList[frag].size(); ++idx) {
-          Atom *atom = m_molecule->atom(fragList[frag][idx] - 1);
-          mol << qSetFieldWidth(4) << right
-              << QString(OpenBabel::etab.GetSymbol(atom->atomicNumber()))
-              << qSetFieldWidth(15) << qSetRealNumberPrecision(5) << forcepoint
-              << fixed << right << atom->pos()->x() << atom->pos()->y()
-              << atom->pos()->z()
-              << qSetFieldWidth(0) << '\n';
-        }
-      }
-    }
-    // Z-matrix
-    else if (m_molecule && m_coordType == ZMATRIX)
-    {
-      QTextStream mol(&buffer);
-      OBAtom *a, *b, *c;
-      double r, w, t;
-
-      /* Taken from OpenBabel's gzmat file format converter */
-      std::vector<OBInternalCoord*> vic;
-      vic.push_back((OpenBabel::OBInternalCoord*)NULL);
-      OpenBabel::OBMol obmol = m_molecule->OBMol();
-      FOR_ATOMS_OF_MOL(atom, &obmol)
-        vic.push_back(new OpenBabel::OBInternalCoord);
-      CartesianToInternal(vic, obmol);
-
-      FOR_ATOMS_OF_MOL(atom, &obmol)
-      {
-        a = vic[atom->GetIdx()]->_a;
-        b = vic[atom->GetIdx()]->_b;
-        c = vic[atom->GetIdx()]->_c;
-
-        mol << qSetFieldWidth(4) << right
-            << QString(etab.GetSymbol(atom->GetAtomicNum())
-                       + QString::number(atom->GetIdx()))
-            << qSetFieldWidth(0);
-        if (atom->GetIdx() > 1)
-          mol << ' ' << QString(etab.GetSymbol(a->GetAtomicNum())
-                                + QString::number(a->GetIdx()))
-              << " r" << atom->GetIdx();
-        if (atom->GetIdx() > 2)
-          mol << ' ' << QString(etab.GetSymbol(b->GetAtomicNum())
-                                + QString::number(b->GetIdx()))
-              << " a" << atom->GetIdx();
-        if (atom->GetIdx() > 3)
-          mol << ' ' << QString(etab.GetSymbol(c->GetAtomicNum())
-                                + QString::number(c->GetIdx()))
-              << " d" << atom->GetIdx();
-        mol << '\n';
-      }
-
-      mol << '\n';
-      FOR_ATOMS_OF_MOL(atom, &obmol)
-      {
-        r = vic[atom->GetIdx()]->_dst;
-        w = vic[atom->GetIdx()]->_ang;
-        if (w < 0.0)
-          w += 360.0;
-        t = vic[atom->GetIdx()]->_tor;
-        if (t < 0.0)
-          t += 360.0;
-        if (atom->GetIdx() > 1)
-          mol << "   r" << atom->GetIdx() << " = " << qSetFieldWidth(15)
-              << qSetRealNumberPrecision(5) << forcepoint << fixed << right
-              << r << qSetFieldWidth(0) << '\n';
-        if (atom->GetIdx() > 2)
-          mol << "   a" << atom->GetIdx() << " = " << qSetFieldWidth(15)
-              << qSetRealNumberPrecision(5) << forcepoint << fixed << right
-              << w << qSetFieldWidth(0) << '\n';
-        if (atom->GetIdx() > 3)
-          mol << "   d" << atom->GetIdx() << " = " << qSetFieldWidth(15)
-              << qSetRealNumberPrecision(5) << forcepoint << fixed << right
-              << t << qSetFieldWidth(0) << '\n';
-      }
-      foreach (OpenBabel::OBInternalCoord *c, vic)
-        delete c;
-    }
-    else if (m_molecule && m_coordType == ZMATRIX_COMPACT)
-    {
-      QTextStream mol(&buffer);
-      OBAtom *a, *b, *c;
-      double r, w, t;
-
-      /* Taken from OpenBabel's gzmat file format converter */
-      std::vector<OBInternalCoord*> vic;
-      vic.push_back((OpenBabel::OBInternalCoord*)NULL);
-      OpenBabel::OBMol obmol = m_molecule->OBMol();
-      FOR_ATOMS_OF_MOL(atom, &obmol)
-        vic.push_back(new OpenBabel::OBInternalCoord);
-      CartesianToInternal(vic, obmol);
-
-      FOR_ATOMS_OF_MOL(atom, &obmol)
-      {
-        a = vic[atom->GetIdx()]->_a;
-        b = vic[atom->GetIdx()]->_b;
-        c = vic[atom->GetIdx()]->_c;
-        r = vic[atom->GetIdx()]->_dst;
-        w = vic[atom->GetIdx()]->_ang;
-        if (w < 0.0)
-          w += 360.0;
-        t = vic[atom->GetIdx()]->_tor;
-        if (t < 0.0)
-          t += 360.0;
-
-        mol << qSetFieldWidth(4) << right
-            << QString(etab.GetSymbol(atom->GetAtomicNum())
-                       + QString::number(atom->GetIdx()));
-        if (atom->GetIdx() > 1)
-          mol << qSetFieldWidth(6) << right
-              << QString(etab.GetSymbol(a->GetAtomicNum())
-                         + QString::number(a->GetIdx())) << qSetFieldWidth(15)
-              << qSetRealNumberPrecision(5) << forcepoint << fixed << right << r;
-        if (atom->GetIdx() > 2)
-          mol << qSetFieldWidth(6) << right
-                 << QString(etab.GetSymbol(b->GetAtomicNum())
-                         + QString::number(b->GetIdx())) << qSetFieldWidth(15)
-              << qSetRealNumberPrecision(5) << forcepoint << fixed << right << w;
-        if (atom->GetIdx() > 3)
-          mol << qSetFieldWidth(6) << right
-              << QString(etab.GetSymbol(c->GetAtomicNum())
-                         + QString::number(c->GetIdx())) << qSetFieldWidth(15)
-              << qSetRealNumberPrecision(5) << forcepoint << fixed << right << t;
-        mol << qSetFieldWidth(0) << '\n';
-      }
-      foreach (OpenBabel::OBInternalCoord *c, vic)
-        delete c;
-    }
-    mol << "$end\n\n";
+    mol << "\nend\n";
 
     return buffer;
   }
@@ -409,37 +285,57 @@ namespace Avogadro
     switch (t)
     {
       case SP:
-        return "SP";
+        return "energy";
+      case PROJ:
+        return "project";
+      case GRAD:
+        return "gradient";
       case OPT:
-        return "Opt";
-      case FREQ:
-        return "Freq";
+        return "minimize";
+      case TS:
+        return "ts";
+      case MD:
+        return "md";
       default:
-        return "SP";
+        return "energy";
     }
   }
 
   QString TeraChemInputDialog::getTheoryType(theoryType t)
   {
     // Translate the enum to text for the output generation
+    //
+    // unrestricted calculation prepend a u to the method
+    QString restriction = "";
+    QString mDefault = "rhf";
+    if(m_unrestricted) {
+      restriction = "u";
+      mDefault = "uhf";
+    }
+
     switch (t)
-    {//   enum theoryType{RHF, B3LYP, B3LYP5, EDF1, M062X, MP2, CCSD}
-      case RHF:
-        return "RHF";
+    {
+      case HF:
+	{
+	  if(m_unrestricted)
+	    return "uhf";
+	  else
+	    return "rhf";
+	}
+      case BLYP:
+        return restriction+"blyp";
       case B3LYP:
-        return "B3LYP";
+        return restriction+"b3lyp";
+      case B3LYP1:
+        return restriction+"b3lyp1";
       case B3LYP5:
-        return "B3LYP5";
-      case EDF1:
-        return "EDF1";
-      case M062X:
-        return "M062X";
-      case MP2:
-        return "HF\n   CORRELATION MP2";
-      case CCSD:
-        return "HF\n   CORRELATION CCSD";
+        return restriction+"b3lyp5";
+      case PBE:
+        return restriction+"pbe";
+      case REVPBE:
+        return restriction+"revpbe";
       default:
-        return "RHF";
+        return mDefault;
     }
   }
 
@@ -449,25 +345,19 @@ namespace Avogadro
     switch (t)
     {
       case STO3G:
-        return "BASIS STO-3G";
+        return "STO-3G";
       case B321G:
-        return "BASIS 3-21G";
+        return "3-21G";
       case B631Gd:
-        return "BASIS 6-31G(d)";
+        return "6-31G(d)";
       case B631Gdp:
-        return "BASIS 6-31G(d,p)";
+        return "6-31G(d,p)";
       case B631plusGd:
-        return "BASIS 6-31+G(d)";
+        return "6-31+G(d)";
       case B6311Gd:
-        return "BASIS 6-311G(d)";
+        return "6-311G(d)";
       case ccpVDZ:
-        return "BASIS cc-pVDZ";
-      case ccpVTZ:
-        return "BASIS cc-pVTZ";
-      case LANL2DZ:
-        return "ECP LANL2DZ";
-      case LACVP:
-        return "ECP LACVP";
+        return "cc-pVDZ";
       default:
         return "6-31G(d)";
     }

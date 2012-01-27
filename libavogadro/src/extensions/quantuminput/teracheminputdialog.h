@@ -43,9 +43,9 @@ namespace Avogadro
     void readSettings(QSettings&);
     void writeSettings(QSettings&) const;
 
-    enum calculationType{SP, OPT, FREQ};
-    enum theoryType{RHF, MP2, B3LYP, B3LYP5, EDF1, M062X, CCSD};
-    enum basisType{STO3G, B321G, B631Gd, B631Gdp, B631plusGd, B6311Gd, ccpVDZ, ccpVTZ, LANL2DZ, LACVP};
+    enum calculationType{SP, PROJ, GRAD, OPT, TS, MD};
+    enum theoryType{HF, BLYP, B3LYP, B3LYP1, B3LYP5, PBE, REVPBE};
+    enum basisType{STO3G, B321G, B631Gd, B631Gdp, B631plusGd, B6311Gd, ccpVDZ};
 
   protected:
     /**
@@ -65,7 +65,9 @@ namespace Avogadro
     //int m_multiplicity;
     //int m_charge;
     QString m_output;
-    coordType m_coordType;
+    bool m_unrestricted;
+    QString m_coordFile;
+
     bool m_dirty;
     bool m_warned;
 
@@ -96,7 +98,8 @@ namespace Avogadro
     void setBasis(int);
     void setMultiplicity(int);
     void setCharge(int);
-    void setCoords(int);
+    void setUnrestricted(bool);
+    void setCoordFile();
   };
 }
 
