@@ -125,7 +125,7 @@ namespace Avogadro
       QMessageBox msgBox;
 
       msgBox.setWindowTitle(tr("TeraChem Input Deck Generator Warning"));
-      msgBox.setText(tr("Would you like to update the preview text, losing all changes made in the Q-Chem input deck preview pane?"));
+      msgBox.setText(tr("Would you like to update the preview text, losing all changes made in the TeraChem input deck preview pane?"));
       msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
 
       switch (msgBox.exec()) {
@@ -156,9 +156,10 @@ namespace Avogadro
     // Reset the form to defaults
     deckDirty(false);
     ui.calculationCombo->setCurrentIndex(0);
-    ui.theoryCombo->setCurrentIndex(1);
-    ui.basisCombo->setCurrentIndex(2);
-    ui.multiplicitySpin->setValue(0);
+    ui.theoryCombo->setCurrentIndex(0);
+    ui.basisCombo->setCurrentIndex(0);
+    ui.multiplicitySpin->setValue(1);
+    ui.checkUnrestricted->setChecked(false);
     ui.chargeSpin->setValue(0);
     ui.previewText->setText(generateInputDeck());
     ui.previewText->document()->setModified(false);
@@ -286,16 +287,10 @@ namespace Avogadro
     {
       case SP:
         return "energy";
-      case PROJ:
-        return "project";
       case GRAD:
         return "gradient";
       case OPT:
         return "minimize";
-      case TS:
-        return "ts";
-      case MD:
-        return "md";
       default:
         return "energy";
     }
@@ -377,12 +372,12 @@ namespace Avogadro
 
   void TeraChemInputDialog::readSettings(QSettings& settings)
   {
-    m_savePath = settings.value("qchem/savepath").toString();
+    m_savePath = settings.value("terachem/savepath").toString();
   }
   
   void TeraChemInputDialog::writeSettings(QSettings& settings) const
   {
-    settings.setValue("qchem/savepath", m_savePath);
+    settings.setValue("terachem/savepath", m_savePath);
   }
 }
 

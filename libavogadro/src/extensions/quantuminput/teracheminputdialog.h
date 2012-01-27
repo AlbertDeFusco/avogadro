@@ -43,7 +43,7 @@ namespace Avogadro
     void readSettings(QSettings&);
     void writeSettings(QSettings&) const;
 
-    enum calculationType{SP, PROJ, GRAD, OPT, TS, MD};
+    enum calculationType{SP, GRAD, OPT};
     enum theoryType{HF, BLYP, B3LYP, B3LYP1, B3LYP5, PBE, REVPBE};
     enum basisType{STO3G, B321G, B631Gd, B631Gdp, B631plusGd, B6311Gd, ccpVDZ};
 
