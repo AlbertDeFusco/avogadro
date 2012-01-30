@@ -46,6 +46,7 @@ namespace Avogadro
     enum calculationType{SP, GRAD, OPT};
     enum theoryType{HF, BLYP, B3LYP, B3LYP1, B3LYP5, PBE, REVPBE};
     enum basisType{STO3G, B321G, B631Gd, B631Gdp, B631plusGd, B6311Gd, ccpVDZ};
+    enum coordType{PDB, XYZ};
 
   protected:
     /**
@@ -55,18 +56,18 @@ namespace Avogadro
 
   private:
     Ui::TeraChemInputDialog ui;
-//    Molecule* m_molecule;
+    //Molecule* m_molecule;
 
     // Internal data structure for the calculation
     //QString m_title;
     calculationType m_calculationType;
     theoryType m_theoryType;
     basisType m_basisType;
+    coordType m_coordType;
     //int m_multiplicity;
     //int m_charge;
     QString m_output;
     bool m_unrestricted;
-    QString m_coordFile;
 
     bool m_dirty;
     bool m_warned;
@@ -77,6 +78,7 @@ namespace Avogadro
     QString getCalculationType(calculationType t);
     QString getTheoryType(theoryType t);
     QString getBasisType(basisType t);
+    QString getCoordType(coordType t);
 
     // Enable/disable form elements
     void deckDirty(bool);
@@ -99,7 +101,7 @@ namespace Avogadro
     void setMultiplicity(int);
     void setCharge(int);
     void setUnrestricted(bool);
-    void setCoordFile();
+    void setCoordType(int);
   };
 }
 

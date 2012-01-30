@@ -31,7 +31,7 @@
 
 #include <QString>
 #include <QTextStream>
-//#include <QFileDialog>
+#include <QFileDialog>
 #include <QMessageBox>
 #include <QDebug>
 
@@ -45,6 +45,7 @@ namespace Avogadro
     m_calculationType(SP),
     m_theoryType(HF),
     m_basisType(STO3G),
+    m_coordType(PDB),
     m_output(),
     m_unrestricted(false),
 
@@ -76,12 +77,12 @@ namespace Avogadro
         this, SLOT(enableFormClicked()));
     connect(ui.checkUnrestricted, SIGNAL(toggled(bool)),
 	this, SLOT(setUnrestricted(bool)));
-    connect(ui.coordFile, SIGNAL(editingFinished()),
-        this, SLOT(setCoordFile()));
+    connect(ui.comboCoord, SIGNAL(currentIndexChanged(int)),
+        this, SLOT(setCoordType(int)));
 
     QSettings settings;
     readSettings(settings);
-    
+
     // Generate an initial preview of the input deck
     updatePreviewText();
   }
@@ -246,9 +247,9 @@ namespace Avogadro
     updatePreviewText();
   }
 
-  void TeraChemInputDialog::setCoordFile()
+  void TeraChemInputDialog::setCoordType(int n)
   {
-    m_coordFile = ui.coordFile->text();
+    m_coordType = (TeraChemInputDialog::coordType) n;
     updatePreviewText();
   }
 
@@ -272,7 +273,11 @@ namespace Avogadro
     mol << "charge         " << m_charge << "\n";
     mol << "spinmul        " << m_multiplicity << "\n\n";
 
-    mol << "coordinates    " << m_coordFile << "\n\n";
+    //mol << "coordinates    " << m_coordFile << "\n\n";
+    QFileInfo coordFile(m_molecule->fileName());
+    QString coordFileName = coordFile.baseName();
+    coordFileName = coordFileName+getCoordType(m_coordType);
+    mol << "coordinates    " << coordFileName << "\n\n";
 
     // End the job spec section
     mol << "\nend\n";
@@ -358,6 +363,19 @@ namespace Avogadro
     }
   }
 
+  QString TeraChemInputDialog::getCoordType(coordType t)
+  {
+    switch (t)
+    {
+      case PDB:
+	return ".pdb";
+      case XYZ:
+	return ".xyz";
+      default:
+	return ".pdb";
+    }
+  }
+
   void TeraChemInputDialog::deckDirty(bool dirty)
   {
     m_dirty = dirty;
@@ -367,6 +385,7 @@ namespace Avogadro
     ui.basisCombo->setEnabled(!dirty);
     ui.multiplicitySpin->setEnabled(!dirty);
     ui.chargeSpin->setEnabled(!dirty);
+    ui.comboCoord->setEnabled(!dirty);
     ui.enableFormButton->setEnabled(dirty);
   }
 
