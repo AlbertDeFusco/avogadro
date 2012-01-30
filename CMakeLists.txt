@@ -555,5 +555,9 @@ else()
   )
 endif()
 
+add_custom_target(tags ctags -R --extra=+q ${CMAKE_SOURCE_DIR}/*
+  WORKING_DIRECTORY ${CMAKE_BUILD_DIR}
+  )
+
 # Use CPack to do some of our packaging
 include(AvoCPack)
