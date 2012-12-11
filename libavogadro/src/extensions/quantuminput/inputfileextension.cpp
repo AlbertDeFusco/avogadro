@@ -26,6 +26,7 @@
 
 #include "abinitinputdialog.h"
 #include "espressoinputdialog.h"
+#include "fhiaimsinputdialog.h"
 #include "daltoninputdialog.h"
 #include "gamessukinputdialog.h"
 #include "gaussianinputdialog.h"
@@ -63,6 +64,11 @@ namespace Avogadro
     action = new QAction(this);
     action->setText(tr("&Dalton..."));
     action->setData("Dalton");
+    m_actions.append(action);
+
+    action = new QAction(this);
+    action->setText(tr("&FHI-AIMS..."));
+    action->setData("FHI-AIMS");
     m_actions.append(action);
 
     action = new QAction(this);
@@ -111,6 +117,7 @@ namespace Avogadro
 
     m_hasDialog["Abinit"] = false;
     m_hasDialog["Dalton"] = false;
+    m_hasDialog["FHI-AIMS"] = false;
     m_hasDialog["GAMESS-UK"] = false;
     m_hasDialog["Gaussian"] = false;
     m_hasDialog["Molpro"] = false;
@@ -220,6 +227,8 @@ namespace Avogadro
       return new AbinitInputDialog(static_cast<QWidget*>(parent()));
     else if (name == "Dalton")
       return new DaltonInputDialog(static_cast<QWidget*>(parent()));
+    else if (name == "FHI-AIMS")
+      return new FhiAimsInputDialog(static_cast<QWidget*>(parent()));
     else if (name == "GAMESS-UK")
       return new GAMESSUKInputDialog(static_cast<QWidget*>(parent()));
     else if (name == "Gaussian")

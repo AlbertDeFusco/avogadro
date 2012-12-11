@@ -11,6 +11,7 @@ set(inputfileextension_SRCS
     abinitinputdialog.cpp
     daltoninputdialog.cpp
     espressoinputdialog.cpp
+    fhiaimsinputdialog.cpp
     gamessukinputdialog.cpp
     gaussianinputdialog.cpp
     molproinputdialog.cpp
@@ -23,6 +24,7 @@ set(inputfileextension_UIS
   gaussianinputdialog.ui
   daltoninputdialog.ui
   espressoinputdialog.ui
+  fhiaimsinputdialog.ui
   gamessukinputdialog.ui
   molproinputdialog.ui
   mopacinputdialog.ui
