@@ -93,6 +93,10 @@ namespace Avogadro
     QSettings settings;
     readSettings(settings);
 
+    if(currentCell()==0)
+      ui.crystalCombo->setEnabled(false);
+
+
     // Generate an initial preview of the input deck
     updatePreviewText();
   }
@@ -122,6 +126,7 @@ namespace Avogadro
     connect(m_molecule, SIGNAL(atomUpdated(Atom *)),
             this, SLOT(updatePreviewText()));
     updatePreviewText();
+
   }
 
 
@@ -477,7 +482,25 @@ namespace Avogadro
     //because &system needs to know the number and types of the atoms,
     //it must be called after the crystal sctructure selector, but
     //it might be better to print it second.
-    buffer2 = getCrystalStructure(m_crystalType);
+
+
+    OBUnitCell *uc = m_molecule->OBUnitCell();
+    if(currentCell()!=0)
+      buffer2 = getCrystalStructure(m_crystalType);
+    else
+    {
+      ui.crystalCombo->setEnabled(false);
+      QString tmp;
+      //buffer.append("ATOMIC_POSITIONS crystal\n");
+      foreach (Atom *atom, m_molecule->atoms()) {
+        int atomicNumber = atom->atomicNumber();
+        tmp.sprintf("atom  %13.8f  %13.8f  %13.8f  %s\n",
+            atom->pos()->x(), atom->pos()->y(), atom->pos()->z() ,
+            OpenBabel::etab.GetSymbol( atomicNumber ));
+        buffer2.append(tmp);
+      }
+    }
+
     mol << buffer2;
 
     return buffer;
