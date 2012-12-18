@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>760</width>
+    <width>765</width>
     <height>680</height>
    </rect>
   </property>
@@ -54,52 +54,207 @@
           <rect>
            <x>0</x>
            <y>-7</y>
-           <width>711</width>
-           <height>120</height>
+           <width>721</width>
+           <height>231</height>
           </rect>
          </property>
          <property name="title">
-          <string>General</string>
+          <string>Physical Model</string>
          </property>
-        </widget>
-        <widget class="QGroupBox" name="groupBox_3">
-         <property name="geometry">
-          <rect>
-           <x>300</x>
-           <y>107</y>
-           <width>231</width>
-           <height>81</height>
-          </rect>
-         </property>
-         <property name="title">
-          <string>Smearing</string>
-         </property>
-        </widget>
-        <widget class="QGroupBox" name="groupBox_4">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>107</y>
-           <width>281</width>
-           <height>111</height>
-          </rect>
-         </property>
-         <property name="title">
-          <string>Calculation Parameters</string>
-         </property>
-        </widget>
-        <widget class="QGroupBox" name="groupBox_7">
-         <property name="geometry">
-          <rect>
-           <x>540</x>
-           <y>107</y>
-           <width>171</width>
-           <height>81</height>
-          </rect>
-         </property>
-         <property name="title">
-          <string>Forces</string>
-         </property>
+         <widget class="QWidget" name="gridLayoutWidget">
+          <property name="geometry">
+           <rect>
+            <x>9</x>
+            <y>29</y>
+            <width>461</width>
+            <height>131</height>
+           </rect>
+          </property>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="1">
+            <widget class="QComboBox" name="xcCombo">
+             <item>
+              <property name="text">
+               <string>pw-lda</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>pz-lda</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>vwn</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>vwn-gauss</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>am05</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>blyp</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>pbe</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>pbeint</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>pbesol</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>rpbe</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>revpbe</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>b3lyp</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>hse03</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>hse06</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>pbe0</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>pbeso10</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>hf</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>mp2</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>screx</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>cohsex</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>pbe_vdw</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>revpbe_vdw</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="xcLabel">
+             <property name="text">
+              <string>XC Functional</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="spinPolCombo">
+             <item>
+              <property name="text">
+               <string>None</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Collinear</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="spinLabel">
+             <property name="text">
+              <string>Spin-polarization</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QComboBox" name="relativityCombo">
+             <item>
+              <property name="text">
+               <string>None</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="relativityLabel">
+             <property name="text">
+              <string>Relativistic</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="chargeLabel">
+             <property name="text">
+              <string>Charge</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QDoubleSpinBox" name="chargeSpin"/>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="momentLabel">
+             <property name="text">
+              <string>Initial Moment</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QDoubleSpinBox" name="momentSpin">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
         <widget class="QTextEdit" name="previewTextControl">
          <property name="enabled">
@@ -109,7 +264,7 @@
           <rect>
            <x>0</x>
            <y>230</y>
-           <width>734</width>
+           <width>721</width>
            <height>311</height>
           </rect>
          </property>
@@ -209,9 +364,9 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>170</y>
-           <width>734</width>
-           <height>371</height>
+           <y>50</y>
+           <width>721</width>
+           <height>491</height>
           </rect>
          </property>
          <property name="sizePolicy">

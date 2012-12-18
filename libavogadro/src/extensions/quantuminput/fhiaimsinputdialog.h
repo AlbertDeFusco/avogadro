@@ -51,6 +51,35 @@ namespace Avogadro
     //crystal structure tab
     enum crystalType{Display, Primitive};
 
+    //control tab
+    enum xcFunctional{
+      pwlda,
+      pzlda,
+      vwn,
+      vwngauss,
+      am05,
+      blyp,
+      pbe,
+      pbeint,
+      pbesol,
+      rpbe,
+      revpbe,
+      b3lyp,
+      hse03,
+      hse06,
+      pbe0,
+      pbeso10,
+      hf,
+      mp2,
+      screx,
+      cohsex,
+      pbe_vdw,
+      revpbe_vdw
+    };
+    enum spinPolarization{snone,collinear};
+    enum relativisticType{rnone};
+
+
     /**
      * Save the settings for this extension.
      * @param settings Settings variable to write settings to.
@@ -79,28 +108,42 @@ namespace Avogadro
     // Basic Tab
     QString m_title;
 
-    //local types
+    //crystal sctructure tab
     crystalType m_crystalType;
+
+    //control tab
+    xcFunctional m_xcFunctional;
+    spinPolarization m_spinPolarization;
+    relativisticType m_relativisticType;
+    double m_charge;
+    double m_initMoment;
 
 
     // Generate an input deck as a string
     QString generateInputDeck();
     QString generateInputGeometry();
 
-    //crystal sctructure tab
+    //crystal sctructure (geometry.in)
     QString getCrystalStructure(crystalType t);
     QString generatePrimitiveLattice();
     QString getDisplayedCrystal();
     QString saveInputFiles(QString inputDeck, QString inputGeometry);
 
-    // Enable/disable form elements
-    bool m_dirty;
-    bool m_warned;
-
+    //input keywords (control.in)
     int numAtoms;
     QHash<int, int> atomTypes;
     QHash<int, int>::iterator itr;
     QHash<int, double> atomMass;
+    QString generateSpeciesTag();
+
+    QString getXCFunctional(xcFunctional t);
+    QString getSpinPolarization(spinPolarization t);
+    QString getRelativisticType(relativisticType t);
+
+    // Enable/disable form elements
+    bool m_dirty;
+    bool m_warned;
+
     void deckDirty(bool);
 
 
@@ -119,6 +162,14 @@ namespace Avogadro
 
     //crystal structure tab
     void setCrystalStructure(int);
+
+    //control tab
+    void setXCFunctional(int);
+    void setSpinPolarization(int);
+    void setRelativisticType(int);
+    void setCharge(double);
+    void setMoment(double);
+
 
 
   };
