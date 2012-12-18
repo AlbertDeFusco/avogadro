@@ -44,6 +44,7 @@
 #include <QHash>
 #include <QTableWidget>
 #include <QSignalMapper>
+#include <QStandardItemModel>
 
 #define ANG2BOHR 1.889725989
 #define PI       3.141592654
@@ -93,9 +94,6 @@ namespace Avogadro
     QSettings settings;
     readSettings(settings);
 
-    if(currentCell()==0)
-      ui.crystalCombo->setEnabled(false);
-
 
     // Generate an initial preview of the input deck
     updatePreviewText();
@@ -125,6 +123,19 @@ namespace Avogadro
             this, SLOT(updatePreviewText()));
     connect(m_molecule, SIGNAL(atomUpdated(Atom *)),
             this, SLOT(updatePreviewText()));
+    connect(m_molecule, SIGNAL(moleculeChanged()),
+            this, SLOT(updatePreviewText()));
+
+    OBUnitCell *uc = m_molecule->OBUnitCell();
+    if(uc)
+      qobject_cast<QStandardItemModel *>(ui.crystalCombo->model())->item( 1 )->setEnabled( true );
+    else
+    {
+      //disable the primitive cell option
+      //i would prefer to disable the combo alltogether
+      qobject_cast<QStandardItemModel *>(ui.crystalCombo->model())->item( 1 )->setEnabled( false );
+    }
+
     updatePreviewText();
 
   }
@@ -173,6 +184,15 @@ namespace Avogadro
       ui.previewTextGeometry->setText(generateInputGeometry());
       ui.previewTextControl->document()->setModified(false);
       ui.previewTextGeometry->document()->setModified(false);
+    }
+    OBUnitCell *uc = m_molecule->OBUnitCell();
+    if(uc)
+      qobject_cast<QStandardItemModel *>(ui.crystalCombo->model())->item( 1 )->setEnabled( true );
+    else
+    {
+      //disable the primitive cell option
+      //i would prefer to disable the combo alltogether
+      qobject_cast<QStandardItemModel *>(ui.crystalCombo->model())->item( 1 )->setEnabled( false );
     }
   }
 
@@ -485,11 +505,10 @@ namespace Avogadro
 
 
     OBUnitCell *uc = m_molecule->OBUnitCell();
-    if(currentCell()!=0)
+    if(uc)
       buffer2 = getCrystalStructure(m_crystalType);
     else
     {
-      ui.crystalCombo->setEnabled(false);
       QString tmp;
       //buffer.append("ATOMIC_POSITIONS crystal\n");
       foreach (Atom *atom, m_molecule->atoms()) {

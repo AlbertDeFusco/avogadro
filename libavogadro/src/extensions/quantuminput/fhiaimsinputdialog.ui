@@ -169,7 +169,7 @@
           <item>
            <widget class="QLabel" name="label">
             <property name="text">
-             <string>Crystal Structure Specification</string>
+             <string>Geometry Specification</string>
             </property>
            </widget>
           </item>
@@ -177,7 +177,7 @@
            <widget class="QComboBox" name="crystalCombo">
             <item>
              <property name="text">
-              <string>Displayed Crystal Structure</string>
+              <string>Use Displayed Geometry</string>
              </property>
             </item>
             <item>
