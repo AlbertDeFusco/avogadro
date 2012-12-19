@@ -77,7 +77,31 @@ namespace Avogadro
       revpbe_vdw
     };
     enum spinPolarization{snone,collinear};
+    enum postSCFType{
+        pnone,
+        C6coef,
+        posthf,
+        llvdwdf,
+        m06,
+        m06l,
+        m062X,
+        postmp2,
+        pbevdw,
+        revpbevdw,
+        revtpss,
+        nlcorr,
+        rpa,
+        rpa2ox,
+        rpasosex,
+        rpt2,
+        tpss,
+        tpssloc,
+        xyg3
+    };
     enum relativisticType{rnone};
+    enum mixerType{pulay,linear,broyden};
+    enum occupationType{onone,gaussian,methpax,fermi};
+    enum relaxationType{renone,bfgs};
 
 
     /**
@@ -113,10 +137,19 @@ namespace Avogadro
 
     //control tab
     xcFunctional m_xcFunctional;
+    postSCFType m_postSCFType;
     spinPolarization m_spinPolarization;
     relativisticType m_relativisticType;
     double m_charge;
     double m_initMoment;
+    occupationType m_occupationType;
+    mixerType m_mixerType;
+    relaxationType m_relaxationType;
+    double m_occWidth;
+    double m_relaxTol;
+    int m_gridX;
+    int m_gridY;
+    int m_gridZ;
 
 
     // Generate an input deck as a string
@@ -137,8 +170,14 @@ namespace Avogadro
     QString generateSpeciesTag();
 
     QString getXCFunctional(xcFunctional t);
+    QString getPostSCFType(postSCFType t);
     QString getSpinPolarization(spinPolarization t);
     QString getRelativisticType(relativisticType t);
+
+    QString getMixerType(mixerType t);
+    QString getOccupationType(occupationType t);
+    QString getRelaxationType(relaxationType t);
+
 
     // Enable/disable form elements
     bool m_dirty;
@@ -165,10 +204,19 @@ namespace Avogadro
 
     //control tab
     void setXCFunctional(int);
+    void setPostSCFType(int);
     void setSpinPolarization(int);
     void setRelativisticType(int);
     void setCharge(double);
     void setMoment(double);
+    void setOccupationType(int);
+    void setOccWidth(double);
+    void setMixerType(int);
+    void setRelaxationType(int);
+    void setRelaxTol(double);
+    void setGridX(int);
+    void setGridY(int);
+    void setGridZ(int);
 
 
 

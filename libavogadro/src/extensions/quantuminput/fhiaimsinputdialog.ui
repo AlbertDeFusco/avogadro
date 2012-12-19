@@ -53,9 +53,9 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-7</y>
-           <width>721</width>
-           <height>231</height>
+           <y>0</y>
+           <width>311</width>
+           <height>261</height>
           </rect>
          </property>
          <property name="title">
@@ -66,8 +66,8 @@
            <rect>
             <x>9</x>
             <y>29</y>
-            <width>461</width>
-            <height>131</height>
+            <width>296</width>
+            <height>191</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout">
@@ -192,7 +192,7 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="1">
+           <item row="2" column="1">
             <widget class="QComboBox" name="spinPolCombo">
              <item>
               <property name="text">
@@ -206,14 +206,14 @@
              </item>
             </widget>
            </item>
-           <item row="1" column="0">
+           <item row="2" column="0">
             <widget class="QLabel" name="spinLabel">
              <property name="text">
               <string>Spin-polarization</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
+           <item row="4" column="1">
             <widget class="QComboBox" name="relativityCombo">
              <item>
               <property name="text">
@@ -222,34 +222,144 @@
              </item>
             </widget>
            </item>
-           <item row="2" column="0">
+           <item row="4" column="0">
             <widget class="QLabel" name="relativityLabel">
              <property name="text">
               <string>Relativistic</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
+           <item row="5" column="0">
             <widget class="QLabel" name="chargeLabel">
              <property name="text">
               <string>Charge</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
+           <item row="5" column="1">
             <widget class="QDoubleSpinBox" name="chargeSpin"/>
            </item>
-           <item row="1" column="2">
-            <widget class="QLabel" name="momentLabel">
-             <property name="text">
-              <string>Initial Moment</string>
-             </property>
+           <item row="3" column="1">
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="momentLabel">
+               <property name="text">
+                <string>Initial Moment</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="momentSpin">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="postSCFCombo">
+             <item>
+              <property name="text">
+               <string>none</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>C6_coef</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>hf</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>ll_vdwdf</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>m06</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>m06l</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>m06-2X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>mp2</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>pbe_vdw</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>revpbe_vdw</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>revtpss</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>nlcorr</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>rpa</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>rpa+2ox</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>rpa+sosex</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>rpt2</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>tpss</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>tpssloc</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>xyg3</string>
+              </property>
+             </item>
             </widget>
            </item>
-           <item row="1" column="3">
-            <widget class="QDoubleSpinBox" name="momentSpin">
-             <property name="enabled">
-              <bool>false</bool>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>Post-SCF</string>
              </property>
             </widget>
            </item>
@@ -263,9 +373,9 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>230</y>
+           <y>270</y>
            <width>721</width>
-           <height>311</height>
+           <height>271</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -277,7 +387,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>300</height>
+           <height>200</height>
           </size>
          </property>
          <property name="font">
@@ -292,6 +402,213 @@
          <property name="acceptRichText">
           <bool>false</bool>
          </property>
+        </widget>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>0</y>
+           <width>291</width>
+           <height>151</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>SCF Convergence</string>
+         </property>
+         <widget class="QWidget" name="gridLayoutWidget_2">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>271</width>
+            <height>61</height>
+           </rect>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Occupation</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="mixerCombo">
+             <item>
+              <property name="text">
+               <string>pulay</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>linear</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>broyden</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>Mixer</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QComboBox" name="occCombo">
+               <item>
+                <property name="text">
+                 <string>none</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>gaussian</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>methfessel-paxton</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>fermi</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="occWidthSpin">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="singleStep">
+                <double>0.010000000000000</double>
+               </property>
+               <property name="value">
+                <double>0.010000000000000</double>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>160</y>
+           <width>161</width>
+           <height>101</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>Relaxation</string>
+         </property>
+         <widget class="QWidget" name="gridLayoutWidget_3">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>141</width>
+            <height>61</height>
+           </rect>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="1" column="1">
+            <widget class="QDoubleSpinBox" name="relaxationTolSpin">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QComboBox" name="relaxationCombo">
+             <item>
+              <property name="text">
+               <string>none</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>bfgs</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Tolerance</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_4">
+         <property name="geometry">
+          <rect>
+           <x>490</x>
+           <y>160</y>
+           <width>231</width>
+           <height>101</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>K-point Grid</string>
+         </property>
+         <widget class="QWidget" name="gridLayoutWidget_4">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>211</width>
+            <height>61</height>
+           </rect>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="1" column="2">
+            <widget class="QSpinBox" name="gridZSpin"/>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="gridYSpin"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QSpinBox" name="gridXSpin"/>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>X</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Y</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>Z</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="geomTab">

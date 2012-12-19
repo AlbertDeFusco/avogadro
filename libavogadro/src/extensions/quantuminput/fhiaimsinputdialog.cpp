@@ -62,11 +62,21 @@ namespace Avogadro
     //crystal structure tab
     m_crystalType(Display),
 
+    //control.in keywords
     m_xcFunctional(pwlda),
+    m_postSCFType(pnone),
     m_spinPolarization(snone),
     m_relativisticType(rnone),
     m_charge(0.0),
     m_initMoment(0.0),
+    m_occupationType(onone),
+    m_mixerType(pulay),
+    m_relaxationType(renone),
+    m_occWidth(0.01),
+    m_relaxTol(0.01),
+    m_gridX(0),
+    m_gridY(0),
+    m_gridZ(0),
 
     // Rest
     m_dirty(false),
@@ -101,6 +111,8 @@ namespace Avogadro
     //control tab
     connect(ui.xcCombo, SIGNAL(currentIndexChanged(int)),
         this, SLOT(setXCFunctional(int)));
+    connect(ui.postSCFCombo, SIGNAL(currentIndexChanged(int)),
+        this, SLOT(setPostSCFType(int)));
     connect(ui.spinPolCombo, SIGNAL(currentIndexChanged(int)),
         this, SLOT(setSpinPolarization(int)));
     connect(ui.relativityCombo, SIGNAL(currentIndexChanged(int)),
@@ -109,6 +121,23 @@ namespace Avogadro
         this, SLOT(setCharge(double)));
     connect(ui.momentSpin, SIGNAL(valueChanged(double)),
         this, SLOT(setMoment(double)));
+    connect(ui.occCombo, SIGNAL(currentIndexChanged(int)),
+        this, SLOT(setOccupationType(int)));
+    connect(ui.occWidthSpin, SIGNAL(valueChanged(double)),
+        this, SLOT(setOccWidth(double)));
+    connect(ui.mixerCombo, SIGNAL(currentIndexChanged(int)),
+        this, SLOT(setMixerType(int)));
+    connect(ui.relaxationCombo, SIGNAL(currentIndexChanged(int)),
+        this, SLOT(setRelaxationType(int)));
+    connect(ui.relaxationTolSpin, SIGNAL(valueChanged(double)),
+        this, SLOT(setRelaxTol(double)));
+    connect(ui.gridXSpin, SIGNAL(valueChanged(int)),
+        this, SLOT(setGridX(int)));
+    connect(ui.gridYSpin, SIGNAL(valueChanged(int)),
+        this, SLOT(setGridY(int)));
+    connect(ui.gridZSpin, SIGNAL(valueChanged(int)),
+        this, SLOT(setGridZ(int)));
+
 
     QSettings settings;
     readSettings(settings);
@@ -337,6 +366,12 @@ namespace Avogadro
     updatePreviewText();
   }
 
+  void FhiAimsInputDialog::setPostSCFType(int n)
+  {
+    m_postSCFType = (FhiAimsInputDialog::postSCFType) n;
+    updatePreviewText();
+  }
+
   void FhiAimsInputDialog::setSpinPolarization(int n)
   {
     m_spinPolarization = (FhiAimsInputDialog::spinPolarization) n;
@@ -358,6 +393,54 @@ namespace Avogadro
   void FhiAimsInputDialog::setMoment(double n)
   {
     m_initMoment = n;
+    updatePreviewText();
+  }
+
+  void FhiAimsInputDialog::setOccupationType(int n)
+  {
+    m_occupationType = (FhiAimsInputDialog::occupationType) n;
+    updatePreviewText();
+  }
+
+  void FhiAimsInputDialog::setOccWidth(double n)
+  {
+    m_occWidth = n;
+    updatePreviewText();
+  }
+
+  void FhiAimsInputDialog::setMixerType(int n)
+  {
+    m_mixerType = (FhiAimsInputDialog::mixerType) n;
+    updatePreviewText();
+  }
+
+  void FhiAimsInputDialog::setRelaxationType(int n)
+  {
+    m_relaxationType = (FhiAimsInputDialog::relaxationType) n;
+    updatePreviewText();
+  }
+
+  void FhiAimsInputDialog::setRelaxTol(double n)
+  {
+    m_relaxTol = n;
+    updatePreviewText();
+  }
+
+  void FhiAimsInputDialog::setGridX(int n)
+  {
+    m_gridX = n;
+    updatePreviewText();
+  }
+
+  void FhiAimsInputDialog::setGridY(int n)
+  {
+    m_gridY = n;
+    updatePreviewText();
+  }
+
+  void FhiAimsInputDialog::setGridZ(int n)
+  {
+    m_gridZ = n;
     updatePreviewText();
   }
 
@@ -559,6 +642,53 @@ namespace Avogadro
     }
   }
 
+  QString FhiAimsInputDialog::getPostSCFType(postSCFType t)
+  {
+    switch(t)
+    {
+        case pnone:
+          return "none";
+        case C6coef:
+          return "C6_coef";
+        case posthf:
+          return "hf";
+        case llvdwdf:
+          return "ll_vdwdf";
+        case m06:
+          return "m06";
+        case m06l:
+          return "mo6l";
+        case m062X:
+          return "m06-2X";
+        case postmp2:
+          return "mp2";
+        case pbevdw:
+          return "pbs_vdw";
+        case revpbevdw:
+          return "revpbd_vdw";
+        case revtpss:
+          return "revtpss";
+        case nlcorr:
+          return "nlcorr";
+        case rpa:
+          return "rpa";
+        case rpa2ox:
+          return "rpa+2ox";
+        case rpasosex:
+          return "rpa+sosex";
+        case rpt2:
+          return "rpt2";
+        case tpss:
+          return "tpss";
+        case tpssloc:
+          return "tpsslow";
+        case xyg3:
+          return "xyg3";
+        default:
+          return "none";
+    }
+  }
+
   QString FhiAimsInputDialog::getSpinPolarization(spinPolarization t)
   {
     switch(t)
@@ -583,6 +713,51 @@ namespace Avogadro
     }
   }
 
+  QString FhiAimsInputDialog::getOccupationType(occupationType t)
+  {
+    switch(t)
+    {
+      case onone:
+        return "none";
+      case gaussian:
+        return "gaussian";
+      case methpax:
+        return "methfessel-paxton";
+      case fermi:
+        return "fermi";
+      default:
+        return "none";
+    }
+  }
+
+  QString FhiAimsInputDialog::getMixerType(mixerType t)
+  {
+    switch(t)
+    {
+      case pulay:
+        return "pulay";
+      case linear:
+        return "linear";
+      case broyden:
+        return "broyden";
+      default:
+        return "pulay";
+    }
+  }
+
+  QString FhiAimsInputDialog::getRelaxationType(relaxationType t)
+  {
+    switch(t)
+    {
+      case renone:
+        return "none";
+      case bfgs:
+        return "bfgs";
+      default:
+        return "none";
+    }
+  }
+
   QString FhiAimsInputDialog::generateInputDeck()
   {
     if (!m_molecule || m_molecule->numAtoms() == 0) {
@@ -597,10 +772,27 @@ namespace Avogadro
     mol << "# fhiaims input generated by Avogadro\n#\n";
 
     mol << "\n";
-    mol << "xc            " << getXCFunctional(m_xcFunctional) << "\n";
-    mol << "spin          " << getSpinPolarization(m_spinPolarization) << "\n";
-    mol << "relativistic  " << getRelativisticType(m_relativisticType) << "\n";
-    mol << "charge        " << m_charge << "\n";
+    mol << "#\n# Physical Model\n#\n";
+    mol << "xc                  " << getXCFunctional(m_xcFunctional) << "\n";
+    mol << "energy_method       " << getPostSCFType(m_postSCFType) << "\n";
+    mol << "spin                " << getSpinPolarization(m_spinPolarization) << "\n";
+    mol << "relativistic        " << getRelativisticType(m_relativisticType) << "\n";
+    mol << "charge              " << m_charge << "\n";
+
+    mol << "\n";
+    mol << "#\n# SCF Convergence\n#\n";
+    mol << "occupation_type     " << getOccupationType(m_occupationType) << "\n";
+    mol << "mixer               " << getMixerType(m_mixerType) << "\n";
+
+    mol << "\n";
+    mol << "#\n# Periodic Boundary Conditions\n#\n";
+    mol << "k_grid              "
+      << m_gridX << " " << m_gridY << " " << m_gridZ << "\n";
+
+    mol << "\n";
+    mol << "#\n# Relaxation\n#\n";
+    mol << "relax_geometry      " << getRelaxationType(m_relaxationType)
+      << "  " << m_relaxTol << "\n";
 
     mol << generateSpeciesTag();
 
