@@ -100,7 +100,7 @@ namespace Avogadro
     };
     enum relativisticType{rnone};
     enum mixerType{pulay,linear,broyden};
-    enum occupationType{onone,gaussian,methpax,fermi};
+    enum occupationType{gaussian,methpax,fermi};
     enum relaxationType{renone,bfgs};
 
 
@@ -150,6 +150,9 @@ namespace Avogadro
     int m_gridX;
     int m_gridY;
     int m_gridZ;
+    double m_offsetX;
+    double m_offsetY;
+    double m_offsetZ;
 
 
     // Generate an input deck as a string
@@ -217,6 +220,9 @@ namespace Avogadro
     void setGridX(int);
     void setGridY(int);
     void setGridZ(int);
+    void setOffsetX(double);
+    void setOffsetY(double);
+    void setOffsetZ(double);
 
 
 

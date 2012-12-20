@@ -69,16 +69,19 @@ namespace Avogadro
     m_relativisticType(rnone),
     m_charge(0.0),
     m_initMoment(0.0),
-    m_occupationType(onone),
+    m_occupationType(gaussian),
     m_mixerType(pulay),
     m_relaxationType(renone),
     m_occWidth(0.01),
     m_relaxTol(0.01),
-    m_gridX(0),
-    m_gridY(0),
-    m_gridZ(0),
+    m_gridX(4),
+    m_gridY(4),
+    m_gridZ(4),
+    m_offsetX(0.0),
+    m_offsetY(0.0),
+    m_offsetZ(0.0),
 
-    // Rest
+    // Reset
     m_dirty(false),
     m_warned(false)
   {
@@ -137,10 +140,34 @@ namespace Avogadro
         this, SLOT(setGridY(int)));
     connect(ui.gridZSpin, SIGNAL(valueChanged(int)),
         this, SLOT(setGridZ(int)));
+    connect(ui.offsetXSpin, SIGNAL(valueChanged(double)),
+        this, SLOT(setOffsetX(double)));
+    connect(ui.offsetYSpin, SIGNAL(valueChanged(double)),
+        this, SLOT(setOffsetY(double)));
+    connect(ui.offsetZSpin, SIGNAL(valueChanged(double)),
+        this, SLOT(setOffsetZ(double)));
 
 
     QSettings settings;
     readSettings(settings);
+
+    /*OBUnitCell *uc = m_molecule->OBUnitCell();
+    if(uc)
+    {
+      qobject_cast<QStandardItemModel *>(ui.crystalCombo->model())->item( 1 )->setEnabled( true );
+      ui.gridXSpin->setEnabled(true);
+      ui.gridYSpin->setEnabled(true);
+      ui.gridZSpin->setEnabled(true);
+    }
+    else
+    {
+      //disable the primitive cell option
+      //i would prefer to disable the combo alltogether
+      qobject_cast<QStandardItemModel *>(ui.crystalCombo->model())->item( 1 )->setEnabled( false );
+      ui.gridXSpin->setEnabled(false);
+      ui.gridYSpin->setEnabled(false);
+      ui.gridZSpin->setEnabled(false);
+    }*/
 
 
     // Generate an initial preview of the input deck
@@ -176,12 +203,27 @@ namespace Avogadro
 
     OBUnitCell *uc = m_molecule->OBUnitCell();
     if(uc)
+    {
       qobject_cast<QStandardItemModel *>(ui.crystalCombo->model())->item( 1 )->setEnabled( true );
+      ui.gridXSpin->setEnabled(true);
+      ui.gridYSpin->setEnabled(true);
+      ui.gridZSpin->setEnabled(true);
+      ui.offsetXSpin->setEnabled(true);
+      ui.offsetYSpin->setEnabled(true);
+      ui.offsetZSpin->setEnabled(true);
+    }
     else
     {
       //disable the primitive cell option
       //i would prefer to disable the combo alltogether
       qobject_cast<QStandardItemModel *>(ui.crystalCombo->model())->item( 1 )->setEnabled( false );
+      //disable k-points
+      ui.gridXSpin->setEnabled(false);
+      ui.gridYSpin->setEnabled(false);
+      ui.gridZSpin->setEnabled(false);
+      ui.offsetXSpin->setEnabled(false);
+      ui.offsetYSpin->setEnabled(false);
+      ui.offsetZSpin->setEnabled(false);
     }
 
     updatePreviewText();
@@ -235,12 +277,26 @@ namespace Avogadro
     }
     OBUnitCell *uc = m_molecule->OBUnitCell();
     if(uc)
+    {
       qobject_cast<QStandardItemModel *>(ui.crystalCombo->model())->item( 1 )->setEnabled( true );
+      ui.gridXSpin->setEnabled(true);
+      ui.gridYSpin->setEnabled(true);
+      ui.gridZSpin->setEnabled(true);
+      ui.offsetXSpin->setEnabled(true);
+      ui.offsetYSpin->setEnabled(true);
+      ui.offsetZSpin->setEnabled(true);
+    }
     else
     {
       //disable the primitive cell option
       //i would prefer to disable the combo alltogether
       qobject_cast<QStandardItemModel *>(ui.crystalCombo->model())->item( 1 )->setEnabled( false );
+      ui.gridXSpin->setEnabled(false);
+      ui.gridYSpin->setEnabled(false);
+      ui.gridZSpin->setEnabled(false);
+      ui.offsetXSpin->setEnabled(false);
+      ui.offsetYSpin->setEnabled(false);
+      ui.offsetZSpin->setEnabled(false);
     }
   }
 
@@ -375,6 +431,14 @@ namespace Avogadro
   void FhiAimsInputDialog::setSpinPolarization(int n)
   {
     m_spinPolarization = (FhiAimsInputDialog::spinPolarization) n;
+    if(m_spinPolarization != snone)
+    {
+      ui.momentSpin->setEnabled(true);
+    }
+    else
+    {
+      ui.momentSpin->setEnabled(false);
+    }
     updatePreviewText();
   }
 
@@ -417,6 +481,14 @@ namespace Avogadro
   void FhiAimsInputDialog::setRelaxationType(int n)
   {
     m_relaxationType = (FhiAimsInputDialog::relaxationType) n;
+    if(m_relaxationType != renone)
+    {
+      ui.relaxationTolSpin->setEnabled(true);
+    }
+    else
+    {
+      ui.relaxationTolSpin->setEnabled(false);
+    }
     updatePreviewText();
   }
 
@@ -441,6 +513,24 @@ namespace Avogadro
   void FhiAimsInputDialog::setGridZ(int n)
   {
     m_gridZ = n;
+    updatePreviewText();
+  }
+
+  void FhiAimsInputDialog::setOffsetX(double n)
+  {
+    m_offsetX = n;
+    updatePreviewText();
+  }
+
+  void FhiAimsInputDialog::setOffsetY(double n)
+  {
+    m_offsetY = n;
+    updatePreviewText();
+  }
+
+  void FhiAimsInputDialog::setOffsetZ(double n)
+  {
+    m_offsetZ = n;
     updatePreviewText();
   }
 
@@ -717,8 +807,6 @@ namespace Avogadro
   {
     switch(t)
     {
-      case onone:
-        return "none";
       case gaussian:
         return "gaussian";
       case methpax:
@@ -726,7 +814,7 @@ namespace Avogadro
       case fermi:
         return "fermi";
       default:
-        return "none";
+        return "gaussian";
     }
   }
 
@@ -766,6 +854,8 @@ namespace Avogadro
     // Generate an input deck based on the settings of the dialog
     QString buffer;
     QTextStream mol(&buffer);
+    mol.setRealNumberNotation(QTextStream::FixedNotation);
+    mol.setRealNumberPrecision(2);
 
     // Title line
     mol << "# " << m_title << "\n";
@@ -774,25 +864,41 @@ namespace Avogadro
     mol << "\n";
     mol << "#\n# Physical Model\n#\n";
     mol << "xc                  " << getXCFunctional(m_xcFunctional) << "\n";
-    mol << "energy_method       " << getPostSCFType(m_postSCFType) << "\n";
+    if(m_postSCFType != pnone)
+      mol << "energy_method       " << getPostSCFType(m_postSCFType) << "\n";
     mol << "spin                " << getSpinPolarization(m_spinPolarization) << "\n";
     mol << "relativistic        " << getRelativisticType(m_relativisticType) << "\n";
     mol << "charge              " << m_charge << "\n";
 
     mol << "\n";
     mol << "#\n# SCF Convergence\n#\n";
-    mol << "occupation_type     " << getOccupationType(m_occupationType) << "\n";
+    mol << "occupation_type     " << getOccupationType(m_occupationType)
+      << " " << m_occWidth << "\n";
     mol << "mixer               " << getMixerType(m_mixerType) << "\n";
 
-    mol << "\n";
-    mol << "#\n# Periodic Boundary Conditions\n#\n";
-    mol << "k_grid              "
-      << m_gridX << " " << m_gridY << " " << m_gridZ << "\n";
 
-    mol << "\n";
-    mol << "#\n# Relaxation\n#\n";
-    mol << "relax_geometry      " << getRelaxationType(m_relaxationType)
-      << "  " << m_relaxTol << "\n";
+    OBUnitCell *uc = m_molecule->OBUnitCell();
+    if(uc)
+    {
+      mol << "\n";
+      mol << "#\n# Periodic Boundary Conditions\n#\n";
+      mol << "k_grid              "
+        << m_gridX << " " << m_gridY << " " << m_gridZ << "\n";
+      if(m_offsetX+m_offsetY+m_offsetZ > 0)
+      {
+        mol << "k_offset            "
+          << m_offsetX << " " << m_offsetY << " " << m_offsetZ << "\n";
+      }
+    }
+
+    if(m_relaxationType != renone)
+    {
+      mol << "\n";
+      mol << "#\n# Relaxation\n#\n";
+      mol << "relax_geometry      " << getRelaxationType(m_relaxationType)
+        << "  " << m_relaxTol << "\n";
+
+    }
 
     mol << generateSpeciesTag();
 
