@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>765</width>
+    <width>767</width>
     <height>680</height>
    </rect>
   </property>
@@ -54,8 +54,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>311</width>
-           <height>261</height>
+           <width>481</width>
+           <height>161</height>
           </rect>
          </property>
          <property name="title">
@@ -66,8 +66,8 @@
            <rect>
             <x>9</x>
             <y>29</y>
-            <width>296</width>
-            <height>191</height>
+            <width>461</width>
+            <height>121</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout">
@@ -192,7 +192,7 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
+           <item row="1" column="1">
             <widget class="QComboBox" name="spinPolCombo">
              <item>
               <property name="text">
@@ -206,14 +206,14 @@
              </item>
             </widget>
            </item>
-           <item row="2" column="0">
+           <item row="1" column="0">
             <widget class="QLabel" name="spinLabel">
              <property name="text">
               <string>Spin-polarization</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="1">
+           <item row="2" column="1">
             <widget class="QComboBox" name="relativityCombo">
              <item>
               <property name="text">
@@ -222,42 +222,14 @@
              </item>
             </widget>
            </item>
-           <item row="4" column="0">
+           <item row="2" column="0">
             <widget class="QLabel" name="relativityLabel">
              <property name="text">
               <string>Relativistic</string>
              </property>
             </widget>
            </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="chargeLabel">
-             <property name="text">
-              <string>Charge</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
-            <widget class="QDoubleSpinBox" name="chargeSpin"/>
-           </item>
-           <item row="3" column="1">
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <widget class="QLabel" name="momentLabel">
-               <property name="text">
-                <string>Initial Moment</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QDoubleSpinBox" name="momentSpin">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="1" column="1">
+           <item row="0" column="3">
             <widget class="QComboBox" name="postSCFCombo">
              <item>
               <property name="text">
@@ -356,10 +328,34 @@
              </item>
             </widget>
            </item>
-           <item row="1" column="0">
+           <item row="0" column="2">
             <widget class="QLabel" name="label_10">
              <property name="text">
               <string>Post-SCF</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QDoubleSpinBox" name="momentSpin">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="momentLabel">
+             <property name="text">
+              <string>Initial Moment</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QDoubleSpinBox" name="chargeSpin"/>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLabel" name="chargeLabel">
+             <property name="text">
+              <string>Charge</string>
              </property>
             </widget>
            </item>
@@ -406,9 +402,9 @@
         <widget class="QGroupBox" name="groupBox">
          <property name="geometry">
           <rect>
-           <x>320</x>
-           <y>0</y>
-           <width>361</width>
+           <x>400</x>
+           <y>160</y>
+           <width>321</width>
            <height>101</height>
           </rect>
          </property>
@@ -418,9 +414,9 @@
          <widget class="QWidget" name="gridLayoutWidget_2">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>30</y>
-            <width>331</width>
+            <x>0</x>
+            <y>20</y>
+            <width>311</width>
             <height>66</height>
            </rect>
           </property>
@@ -500,10 +496,10 @@
         <widget class="QGroupBox" name="groupBox_3">
          <property name="geometry">
           <rect>
-           <x>320</x>
-           <y>110</y>
-           <width>161</width>
-           <height>101</height>
+           <x>0</x>
+           <y>160</y>
+           <width>251</width>
+           <height>71</height>
           </rect>
          </property>
          <property name="title">
@@ -514,24 +510,11 @@
            <rect>
             <x>10</x>
             <y>30</y>
-            <width>141</width>
-            <height>61</height>
+            <width>230</width>
+            <height>31</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_4">
-           <item row="1" column="1">
-            <widget class="QDoubleSpinBox" name="relaxationTolSpin">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="singleStep">
-              <double>0.010000000000000</double>
-             </property>
-             <property name="value">
-              <double>0.010000000000000</double>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="0" colspan="2">
             <widget class="QComboBox" name="relaxationCombo">
              <item>
@@ -546,7 +529,20 @@
              </item>
             </widget>
            </item>
-           <item row="1" column="0">
+           <item row="0" column="3">
+            <widget class="QDoubleSpinBox" name="relaxationTolSpin">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="singleStep">
+              <double>0.010000000000000</double>
+             </property>
+             <property name="value">
+              <double>0.010000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
             <widget class="QLabel" name="label_5">
              <property name="text">
               <string>Tolerance</string>
@@ -559,10 +555,10 @@
         <widget class="QGroupBox" name="groupBox_4">
          <property name="geometry">
           <rect>
-           <x>490</x>
-           <y>110</y>
+           <x>500</x>
+           <y>0</y>
            <width>221</width>
-           <height>151</height>
+           <height>161</height>
           </rect>
          </property>
          <property name="title">
@@ -574,7 +570,7 @@
             <x>10</x>
             <y>30</y>
             <width>201</width>
-            <height>111</height>
+            <height>112</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_5">
@@ -664,6 +660,55 @@
              <property name="singleStep">
               <double>0.010000000000000</double>
              </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_5">
+         <property name="geometry">
+          <rect>
+           <x>260</x>
+           <y>160</y>
+           <width>131</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>Basis Set</string>
+         </property>
+         <widget class="QWidget" name="verticalLayoutWidget">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>111</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QComboBox" name="basisCombo">
+             <item>
+              <property name="text">
+               <string>light</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>light_194</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>tight</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>really_tight</string>
+              </property>
+             </item>
             </widget>
            </item>
           </layout>

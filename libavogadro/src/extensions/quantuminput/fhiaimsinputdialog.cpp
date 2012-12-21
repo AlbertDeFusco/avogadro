@@ -80,6 +80,7 @@ namespace Avogadro
     m_offsetX(0.0),
     m_offsetY(0.0),
     m_offsetZ(0.0),
+    m_basisType(light),
 
     // Reset
     m_dirty(false),
@@ -146,6 +147,8 @@ namespace Avogadro
         this, SLOT(setOffsetY(double)));
     connect(ui.offsetZSpin, SIGNAL(valueChanged(double)),
         this, SLOT(setOffsetZ(double)));
+    connect(ui.basisCombo, SIGNAL(currentIndexChanged(int)),
+        this, SLOT(setBasisType(int)));
 
 
     QSettings settings;
@@ -534,6 +537,12 @@ namespace Avogadro
     updatePreviewText();
   }
 
+  void FhiAimsInputDialog::setBasisType(int n)
+  {
+    m_basisType = (FhiAimsInputDialog::basisType) n;
+    updatePreviewText();
+  }
+
   //crystal structure tab output
   QString FhiAimsInputDialog::getCrystalStructure(crystalType t)
   {
@@ -846,6 +855,23 @@ namespace Avogadro
     }
   }
 
+  QString FhiAimsInputDialog::getBasisType(basisType t)
+  {
+    switch(t)
+    {
+      case light:
+        return "light";
+      case light194:
+        return "light_194";
+      case tight:
+        return "tight";
+      case reallytight:
+        return "really_tight";
+      default:
+        return "light";
+    }
+  }
+
   QString FhiAimsInputDialog::generateInputDeck()
   {
     if (!m_molecule || m_molecule->numAtoms() == 0) {
@@ -900,6 +926,7 @@ namespace Avogadro
 
     }
 
+    mol << "\n#basis: " << getBasisType(m_basisType) << "\n\n";
     mol << generateSpeciesTag();
 
 

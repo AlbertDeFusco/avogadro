@@ -102,6 +102,7 @@ namespace Avogadro
     enum mixerType{pulay,linear,broyden};
     enum occupationType{gaussian,methpax,fermi};
     enum relaxationType{renone,bfgs};
+    enum basisType{light,light194,tight,reallytight};
 
 
     /**
@@ -153,6 +154,7 @@ namespace Avogadro
     double m_offsetX;
     double m_offsetY;
     double m_offsetZ;
+    basisType m_basisType;
 
 
     // Generate an input deck as a string
@@ -180,7 +182,7 @@ namespace Avogadro
     QString getMixerType(mixerType t);
     QString getOccupationType(occupationType t);
     QString getRelaxationType(relaxationType t);
-
+    QString getBasisType(basisType t);
 
     // Enable/disable form elements
     bool m_dirty;
@@ -223,6 +225,7 @@ namespace Avogadro
     void setOffsetX(double);
     void setOffsetY(double);
     void setOffsetZ(double);
+    void setBasisType(int);
 
 
 
